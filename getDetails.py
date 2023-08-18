@@ -17,3 +17,4 @@ def getDetails(address):
         return avm_details
     except:
         return ""
+
