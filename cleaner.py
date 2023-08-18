@@ -7,8 +7,15 @@ def delete_unwanted_files(path):
     
     :param path: Path to the directory.
     """
+    #TODO: some files of states dont have statewide-addresses-state.geojson file
+    # will need to adjust the code to see if the file is in the sub folder of the state
+    # otherwise search through all files in the subfolder and merged them together to create
+    # a statewide-addresses-state.geojson file
     for dirpath, dirnames, filenames in os.walk(path):
         for filename in filenames:
+            # can be modified in the future for just city of the state instead
+            # reason we want statewide-addresses-state file is because the file
+            # contains city values in the json 
             if filename != "statewide-addresses-state.geojson":
                 file_to_delete = os.path.join(dirpath, filename)
                 try:
@@ -17,11 +24,12 @@ def delete_unwanted_files(path):
                 except Exception as e:
                     print(f"Error deleting {file_to_delete}. Error: {e}")
 
-if __name__ == "__main__":
-    folder_path = input("Enter the path to the folder: ")
+
+def deleter(folderPath):
+    # folder path is the path to files downloaded from openAddresses
     
-    if os.path.exists(folder_path) and os.path.isdir(folder_path):
-        delete_unwanted_files(folder_path)
+    if os.path.exists(folderPath) and os.path.isdir(folderPath):
+        delete_unwanted_files(folderPath)
         print("Finished deleting unwanted files.")
     else:
-        print(f"'{folder_path}' is not a valid directory path.")
+        print(f"'{folderPath}' is not a valid directory path.")
