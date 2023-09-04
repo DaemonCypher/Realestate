@@ -25,5 +25,3 @@ A more likely option is to only keep track of a city instead of the entire U.S. 
 * Implement SQL lite
 * Implement d3.js for front end view
 * U.S. county choropleth heat map 
-
-
