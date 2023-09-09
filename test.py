@@ -95,7 +95,7 @@ def _batch_write_to_file(filename, data_list, batch_size=100):
 
 
 # Running the asynchronous function
-data = asyncio.run(process_geojson_data(r'C:\Users\willi\Desktop\Realestate\cleaned.geojson'))
+data = asyncio.run(process_geojson_data('file path'))
 
 
 async def process_feature_with_limit(feature, semaphore, client):
@@ -157,6 +157,6 @@ def _batch_write_to_file(filename, data_list, batch_size=100):
 
 
 # Running the asynchronous function
-data = asyncio.run(process_geojson_data(r'C:\Users\willi\Desktop\Realestate\cleaned.geojson'))
+data = asyncio.run(process_geojson_data('file path'))
 valid_conn.close()
 invalid_conn.close()
