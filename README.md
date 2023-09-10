@@ -18,10 +18,8 @@ A more likely option is to only keep track of a city instead of the entire U.S. 
 
 # To be implemented
 * Candle Stick chart
-* Back end storage
 * OpenAddresses webscraper
 * Webpage
 * Hosting the code
-* Implement SQL lite
 * Implement d3.js for front end view
 * U.S. county choropleth heat map 
