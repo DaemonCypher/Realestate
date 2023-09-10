@@ -5,9 +5,10 @@ from helper import read_geojson_features
 import concurrent.futures
 from collector import Redfin
 import sqlite3
+import json
+
 client = Redfin()
 semaphore = asyncio.Semaphore(250)
-
 
 valid_conn  = sqlite3.connect("validAddress.db")
 invalid_conn = sqlite3.connect("invalidAddress.db")
@@ -17,7 +18,7 @@ def setup_db(conn, table_name):
     cursor.execute(f"""
     CREATE TABLE IF NOT EXISTS {table_name} (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        address TEXT,
+        address TEXT UNIQUE,
         city TEXT,
         history TEXT
     )
@@ -29,134 +30,71 @@ setup_db(invalid_conn, "invalid_addresses")
 
 def _batch_write_to_db(conn, table_name, data_list):
     cursor = conn.cursor()
-    cursor.executemany(f"INSERT INTO {table_name} (address, city, history) VALUES (?, ?, ?)", data_list)
+    cursor.executemany(f"INSERT OR IGNORE INTO {table_name} (address, city, history) VALUES (?, ?, ?)", data_list)
     conn.commit()
 
 async def process_feature_with_limit(feature, semaphore, client):
     async with semaphore:
         return await process_feature(feature, client)
 
-
 async def process_feature(feature, client):
     props = feature.get("properties", {})
-
     address = f"{props.get('number', 'N/A')} {props.get('street', 'N/A')}, {props.get('city', 'N/A')}, {props.get('region', 'N/A')} {props.get('postcode', 'N/A')}"
-    data = await getDetails(address, client)
 
+    data = await getDetails(address, client)
     if not data or data == "":
         return (address, None)
 
     history = data.get('history', [])
-    if not isinstance(history, list):
-        history = []
+    history_str = json.dumps(history) if isinstance(history, list) else '[]'
+    return (address, {'address': address, 'city': props.get('city', 'N/A'), 'history': history_str})
 
-    # current price shown on redfin    
-    #displayed_price = data.get('displayedPrice', 'N/A')
-    # current status shown on redfin
-    #status = data.get('status', 'N/A')
-    # date of current status shown on redfin
-    #status_date = data['statusDate'].strftime('%Y-%m-%d %H:%M:%S') if data.get('statusDate') else "N/A"
-    # redfin estimated price history on redfin
-    
-    return (address, {'city': props.get('city', 'N/A'), 'history': history})
+def addresses_in_db(conn, table_name, addresses):
+    cursor = conn.cursor()
+    placeholders = ', '.join(['?'] * len(addresses))
+    cursor.execute(f"SELECT address FROM {table_name} WHERE address IN ({placeholders})", addresses)
+    return set(item[0] for item in cursor.fetchall())
 
-
-async def process_geojson_data(geojson_file_path):
+async def process_geojson_data(geojson_file_path, batch_size=50):
     geojson_data = read_geojson_features(geojson_file_path)
-    data = []
-    invalid_addresses = []
-    valid_addresses = []
+    valid_data_to_insert = []
+    invalid_data_to_insert = []
 
-    tasks = [process_feature_with_limit(feature, semaphore, client) for feature in geojson_data[:10000]]
+    all_addresses = [
+        f"{feature['properties'].get('number', 'N/A')} {feature['properties'].get('street', 'N/A')}, {feature['properties'].get('city', 'N/A')}, {feature['properties'].get('region', 'N/A')} {feature['properties'].get('postcode', 'N/A')}" 
+        for feature in geojson_data[:200000]
+    ]
+    
+    # Check addresses in batches
+    tasks = []
+    with alive_bar(len(all_addresses), title='Checking if addresses are in the database') as bar:
+        for i in range(0, len(all_addresses), batch_size):
+            batch = all_addresses[i:i+batch_size]
+            existing_valid_addresses = addresses_in_db(valid_conn, 'valid_addresses', batch)
+            existing_invalid_addresses = addresses_in_db(invalid_conn, 'invalid_addresses', batch)
+            for feature in geojson_data[i:i+batch_size]:
+                props = feature.get("properties", {})
+                address = f"{props.get('number', 'N/A')} {props.get('street', 'N/A')}, {props.get('city', 'N/A')}, {props.get('region', 'N/A')} {props.get('postcode', 'N/A')}"
+                if address not in existing_valid_addresses and address not in existing_invalid_addresses:
+                    tasks.append(process_feature_with_limit(feature, semaphore, client))
+                bar()
 
     with alive_bar(len(tasks), title='Processing addresses') as bar:
         for future in asyncio.as_completed(tasks):
             address, result_data = await future
-
-            if result_data and result_data['city'] and result_data['history']:
-                data.append((result_data['city'], result_data['history']))
-                valid_addresses.append(address)
+            if result_data:
+                valid_data_to_insert.append((result_data['address'], result_data['city'], result_data['history']))
             else:
-                invalid_addresses.append(address)
-
+                invalid_data_to_insert.append((address, 'N/A', '[]'))
             bar()
 
-    _batch_write_to_file("nonResidental.txt", invalid_addresses)
-    _batch_write_to_file("residential.txt", valid_addresses)
-
-    return data
-
-
-def _batch_write_to_file(filename, data_list, batch_size=100):
-    with open(filename, "a") as f:
-        for i in range(0, len(data_list), batch_size):
-            batch = data_list[i:i+batch_size]
-            f.write('\n'.join(batch) + '\n')
-
+    _batch_write_to_db(valid_conn, 'valid_addresses', valid_data_to_insert)
+    _batch_write_to_db(invalid_conn, 'invalid_addresses', invalid_data_to_insert)
+    return valid_data_to_insert
 
 # Running the asynchronous function
-data = asyncio.run(process_geojson_data('file path'))
+data = asyncio.run(process_geojson_data(r'C:\Users\willi\Desktop\Realestate\cleaned.geojson'))
 
 
-async def process_feature_with_limit(feature, semaphore, client):
-    async with semaphore:
-        return await process_feature(feature, client)
-
-
-async def process_feature(feature, client):
-    props = feature.get("properties", {})
-
-    address = f"{props.get('number', 'N/A')} {props.get('street', 'N/A')}, {props.get('city', 'N/A')}, {props.get('region', 'N/A')} {props.get('postcode', 'N/A')}"
-    data = await getDetails(address, client)
-
-    if not data or data == "":
-        return (address, None)
-
-    history = data.get('history', [])
-    if not isinstance(history, list):
-        history = []
-
-    # current price shown on redfin    
-    #displayed_price = data.get('displayedPrice', 'N/A')
-    # current status shown on redfin
-    #status = data.get('status', 'N/A')
-    # date of current status shown on redfin
-    #status_date = data['statusDate'].strftime('%Y-%m-%d %H:%M:%S') if data.get('statusDate') else "N/A"
-    # redfin estimated price history on redfin
-    
-    return (address, {'city': props.get('city', 'N/A'), 'history': history})
-
-
-async def process_geojson_data(geojson_file_path):
-    geojson_data = read_geojson_features(geojson_file_path)
-    data = []
-    invalid_addresses = []
-    valid_addresses = []
-
-    tasks = [process_feature_with_limit(feature, semaphore, client) for feature in geojson_data[:10000]]
-
-    with alive_bar(len(tasks), title='Processing addresses') as bar:
-        for future in asyncio.as_completed(tasks):
-            address, result_data = await future
-
-            if result_data and result_data['city'] and result_data['history']:
-                _batch_write_to_db(valid_conn, "valid_addresses", [(address, result_data['city'], str(result_data['history']))])
-            else:
-                _batch_write_to_db(invalid_conn, "invalid_addresses", [(address, "N/A", "N/A")])
-
-            bar()
-
-    return data
-
-
-def _batch_write_to_file(filename, data_list, batch_size=100):
-    with open(filename, "a") as f:
-        for i in range(0, len(data_list), batch_size):
-            batch = data_list[i:i+batch_size]
-            f.write('\n'.join(batch) + '\n')
-
-
-# Running the asynchronous function
-data = asyncio.run(process_geojson_data('file path'))
 valid_conn.close()
 invalid_conn.close()
