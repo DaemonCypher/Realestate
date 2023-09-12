@@ -14,7 +14,9 @@ This is after removing several duplicate addresses and addresses that are likely
 Without a backing of an organization to use Zillow API for faster request time or more request it is feasibly impossible to run the code alone on a personal computer for a nation wide scale.
 Will still be working on creating components of the project, but the complete implementation of the project will not be done for the reasons mentioned before.
 
-A more likely option is to only keep track of a city instead of the entire U.S. if used for personal reasons.
+A more likely option is to only keep track of a city or state instead of the entire U.S. if used for personal reasons.
+
+The code will be develop with SQlite3 as the backend database, Python3 for data collection, organization, and API for the frontend to communicate to. Node.js and D3.js will be used for grabing the data in the back and displaying charts in the frontend. 
 
 # To be implemented
 * Candle Stick chart
