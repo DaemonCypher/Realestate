@@ -126,15 +126,25 @@ class Redfin:
 
     async def stats(self, property_id, listing_id, region_id, **kwargs):
         return await self.meta_property('stats', {'regionId': region_id, 'propertyId': property_id, 'listingId': listing_id, 'regionTypeId': 2, **kwargs})
-    
-    
+       
     # Added additional function here to better suit the project needs. This function uses the propertyID and gathers estimated historical price
     # history from redfin.
     async def price_history(self, property_id, listing_id=None, **kwargs):
+        """
+        Added additional function here to better suit the project needs. 
+        Grabs the estimated historical price history for a given property from Redfin.
+
+        Args:
+            property_id (int): The unique identifier of the property.
+            listing_id (int, optional): The unique identifier of the listing for the property. Defaults to None.
+            **kwargs: Additional parameters to be passed to the meta_property function.
+
+        Returns:
+            dict: A dictionary containing the historical price data for the property.
+        """
         params = {'propertyId': property_id}
         if listing_id:
             params['listingId'] = listing_id
         params.update(kwargs)
         return await self.meta_property('avmHistoricalData', params)
-    
     
