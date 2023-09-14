@@ -58,3 +58,4 @@ npm run start
 * Implement d3.js for front end view
 * U.S. county choropleth heat map
 * argparse for setup.py
+* Depending on the end result of the webpage will need to refactor the code
