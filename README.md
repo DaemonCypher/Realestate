@@ -1,5 +1,4 @@
-# Realestate
-Real Estate Heat Map /Historic Price Trend Indicator.
+# Real Estate Heat Map /Historic Price Trend Indicator.
 
 This is an individual project for nation wide heat map of the U.S. by county, and can be viewed downed to the city for more accurate representation showing a historic price trend on a city level. 
 
