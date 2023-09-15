@@ -51,11 +51,7 @@ npm run start
 ```
 
 # To be implemented
-* Candle Stick chart
 * OpenAddresses webscraper(might be easier to have the user download the data instead)
-* Webpage
 * Hosting the code
-* Implement d3.js for front end view
-* U.S. county choropleth heat map
 * argparse for setup.py
 * Depending on the end result of the webpage will need to refactor the code
