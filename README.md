@@ -1,11 +1,7 @@
 # Realestate
 Real Estate Heat Map /Historic Price Trend Indicator.
 
-This is an individual project for nation wide heat map of the U.S. by county, and can be viewed downed to the city for more accurate representation.
-It will also incorprate a historic price trend in a form of a candle stick chart (without the low and high, as the data will only be updated 
-once a month with the begining and end of the 30 day period) on the scale of what the user is viewing at the time. This can be a nation wide
-candle stick chart or a small city candle stick chart. Each time new data is gathered or update the average price of that region will be updated
-with the corresponding new data. 
+This is an individual project for nation wide heat map of the U.S. by county, and can be viewed downed to the city for more accurate representation showing a historic price trend on a city level. 
 
 
 Currently a working progress. Main issue is the amount of data to be process(CT alone has 1015948 known addresses)
