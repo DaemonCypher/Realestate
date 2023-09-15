@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Realestate Viewer</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://d3js.org/topojson.v3.min.js"></script>
+</head>
+<body style="background-color: #000000;"></body>>
+    <iframe title="Quarterly Real Estate Appreciation by County"
+            aria-label="Map" 
+            id="datawrapper-chart-S6BkG" 
+            src="https://datawrapper.dwcdn.net/S6BkG/4/" 
+            scrolling="no" 
+            frameborder="0" 
+            style="width: 0; min-width: 100% !important; border: none;" 
+            height="630"
+            data-external="1">
+    </iframe>
+    <script type="text/javascript">
+        !function()
+        {
+            "use strict";
+            window.addEventListener("message",(function(a)
+            {
+                if(void 0!==a.data["datawrapper-height"])
+                {
+                    var e=document.querySelectorAll("iframe");
+                    for(var t in a.data["datawrapper-height"])
+                        for(var r=0;r<e.length;r++)
+                            if(e[r].contentWindow===a.source)
+                            {
+                                var i=a.data["datawrapper-height"][t]+"px";
+                                e[r].style.height=i
+                            }
+                }
+            }))
+        }();
+    </script>
+    <iframe title="Top 100 Hottest Real Estate Markets by Appreciation" 
+            aria-label="Map" 
+            id="datawrapper-chart-p4NM9" 
+            src="https://datawrapper.dwcdn.net/p4NM9/10/" 
+            scrolling="no" 
+            frameborder="0" 
+            style="width: 0; min-width: 100% !important; border: none;" 
+            height="506" 
+            data-external="1">
+    </iframe>
+    <script type="text/javascript">
+        !function()
+        {
+            "use strict";
+            window.addEventListener("message",(function(a)
+            {
+                if(void 0!==a.data["datawrapper-height"])
+                {
+                    var e=document.querySelectorAll("iframe");
+                    for(var t in a.data["datawrapper-height"])
+                        for(var r=0;r<e.length;r++)
+                            if(e[r].contentWindow===a.source)
+                            {
+                                var i=a.data["datawrapper-height"][t]+"px";
+                                e[r].style.height=i
+                            }
+                }
+            }))
+        }();
+    </script>    
+    <iframe title="Annual Real Estate Appreciation by County" 
+            aria-label="Map" 
+            id="datawrapper-chart-vbydZ" 
+            src="https://datawrapper.dwcdn.net/vbydZ/10/" 
+            scrolling="no" 
+            frameborder="0" 
+            style="width: 0; min-width: 100% !important; border: none;" 
+            height="630" 
+            data-external="1">
+    </iframe>
+    <script type="text/javascript">
+        !function()
+        {
+            "use strict";
+            window.addEventListener("message",(function(a)
+            {
+                if(void 0!==a.data["datawrapper-height"])
+                {
+                    var e=document.querySelectorAll("iframe");
+                    for(var t in a.data["datawrapper-height"])
+                        for(var r=0;r<e.length;r++)
+                        if(e[r].contentWindow===a.source)
+                        {
+                            var i=a.data["datawrapper-height"][t]+"px";e[r].style.height=i
+                        }
+                }
+                }))
+        }();
+    </script>    
+    <iframe title="Gross Rent Multiplier (GRM) in 250 Largest Cities" 
+            aria-label="Map" 
+            id="datawrapper-chart-XOQtt" 
+            src="https://datawrapper.dwcdn.net/XOQtt/12/" 
+            scrolling="no" 
+            frameborder="0" 
+            style="width: 0; min-width: 100% !important; border: none;" 
+            height="485" 
+            data-external="1">
+    </iframe>
+    <script type="text/javascript">
+        !function()
+        {
+            "use strict";
+            window.addEventListener("message",(function(a)
+            {
+                if(void 0!==a.data["datawrapper-height"])
+                {
+                    var e=document.querySelectorAll("iframe");
+                    for(var t in a.data["datawrapper-height"])
+                        for(var r=0;r<e.length;r++)
+                        if(e[r].contentWindow===a.source)
+                        {
+                            var i=a.data["datawrapper-height"][t]+"px";e[r].style.height=i
+                        }
+                }
+            }))
+        }();
+    </script>    
+    <div style="width: 75%; margin: auto;">
+    <canvas id="myLineChart"></canvas>
+    </div>
+
+    <script src="chart.js"></script>
+
+<form action="/process-input" method="POST">
+    <label for="userInput">Enter some data:</label>
+    <input type="text" id="userInput" name="userInput">
+</form>
+
+<button onclick="downloadData()">/setup</button>
+
+<script>
+    function downloadData() {
+        window.location.href = "/setup";
+    }
+</script>
+
+<button onclick="redirectToValid()">/valid</button>
+
+<script>
+    function redirectToValid() {
+        window.location.href = "/valid";
+    }
+</script>
+</body>
+</html>
