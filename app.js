@@ -9,7 +9,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false })); // Add this
 app.use(express.static('public')); 
 
-const db = new sqlite3.Database('validAddress.db', sqlite3.OPEN_READONLY, (err) => {
+const validDB = new sqlite3.Database('validAddress.db', sqlite3.OPEN_READONLY, (err) => {
     if (err) {
         console.error('Error connecting to the SQLite database:', err.message);
     } else {
@@ -17,8 +17,26 @@ const db = new sqlite3.Database('validAddress.db', sqlite3.OPEN_READONLY, (err) 
     }
 });
 
+const invalidDB = new sqlite3.Database('invalidAddress.db', sqlite3.OPEN_READONLY, (err) => {
+    if (err) {
+        console.error('Error connecting to the SQLite database:', err.message);
+    } else {
+        console.log('Connected to the SQLite database.');
+    }
+});
+
+app.get('/invalid', (req, res) => {
+    invalidDB.all("SELECT * FROM invalidAddress", [], (err, rows) => {
+        if (err) {
+            res.status(400).json({"error": err.message});
+            return;
+        }
+        res.json({"invalidAddress": rows});
+    });
+});
+
 app.get('/valid', (req, res) => {
-    db.all("SELECT * FROM validAddress", [], (err, rows) => {
+    validDB.all("SELECT * FROM validAddress", [], (err, rows) => {
         if (err) {
             res.status(400).json({"error": err.message});
             return;
@@ -27,26 +45,39 @@ app.get('/valid', (req, res) => {
     });
 });
 
-app.get('/setup', (req, res) => {
-    exec('python3 setup.py', (error, stdout, stderr) => {
-        if (error) {
-            console.error(`exec error: ${error}`);
-            return;
-        }
-        res.send(stdout);  // This will send the result of the Python script back as the response
-    });
-});
-
 // Serve the index.html on root
 app.get('/', (req, res) => {
     res.sendFile(__dirname + '/public/index.html');
 });
 
+app.post('/search', (req, res) => {
+    const query = req.body.query;
+    if (!query) {
+        return res.status(400).send("Invalid input");
+    }
+
+    // Using the LIKE keyword with "%" wildcards to match any sequence of characters before or after the query.
+    // The query checks for both "Sold (Public Records)" and "Sold (MLS)" statuses.
+    validDB.all(`SELECT * FROM validAddress WHERE city LIKE ? AND (status = "Sold (Public Records)" OR status = "Sold (MLS)")`, [`%${query}%`], (err, rows) => {
+        if (err) {
+            return res.status(400).json({"error": err.message});
+        }
+
+        if (rows.length === 0)
+        {
+            res.sendFile(__dirname + '/public/error.html')
+        }
+        else
+        {
+        res.json(rows);
+        }
+    });
+});
+
+
+
+
+
 app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
-});
-app.post('/process-input', (req, res) => {
-    const userInput = req.body.userInput;
-    console.log("Received user input:", userInput);
-    res.send(`You entered: ${userInput}`);
 });
