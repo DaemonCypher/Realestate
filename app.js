@@ -13,7 +13,7 @@ const validDB = new sqlite3.Database('validAddress.db', sqlite3.OPEN_READONLY, (
     if (err) {
         console.error('Error connecting to the SQLite database:', err.message);
     } else {
-        console.log('Connected to the SQLite database.');
+        console.log('Connected to the validAddress database.');
     }
 });
 
@@ -21,7 +21,7 @@ const invalidDB = new sqlite3.Database('invalidAddress.db', sqlite3.OPEN_READONL
     if (err) {
         console.error('Error connecting to the SQLite database:', err.message);
     } else {
-        console.log('Connected to the SQLite database.');
+        console.log('Connected to the invalidAddress database.');
     }
 });
 
