@@ -45,8 +45,9 @@ Will start the webpage with all the data collected and display the chart.
 npm run start
 ```
 
+
 # To be implemented
-* OpenAddresses webscraper(might be easier to have the user download the data instead)
 * Hosting the code
 * argparse for setup.py
 * Depending on the end result of the webpage will need to refactor the code
+* Containarize code
