@@ -48,6 +48,5 @@ npm run start
 
 # To be implemented
 * Hosting the code
-* argparse for setup.py
 * Depending on the end result of the webpage will need to refactor the code
 * Containarize code
