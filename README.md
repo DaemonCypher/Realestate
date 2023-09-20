@@ -11,7 +11,7 @@ Will still be working on creating components of the project, but the complete im
 
 A more likely option is to only keep track of a city or state instead of the entire U.S. if used for personal reasons.
 
-The code will be develop with SQlite3 as the backend database, Python3 for data collection, organization, and API for the frontend to communicate to. Node.js and D3.js will be used for grabing the data in the back and displaying charts in the frontend. 
+Tech Stack: Python3, SQLite3, Node.js, Express.js 
 
 # Prequiste
 * Anaconda
