@@ -54,7 +54,7 @@ Will start the webpage with all the data collected and display the chart.
 ```
 npm run start
 ```
-
+![](https://github.com/DaemonCypher/Realestate/blob/main/demo.gif)
 
 # To be implemented
 * Hosting the code
