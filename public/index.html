@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Realestate Viewer</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="https://d3js.org/topojson.v3.min.js"></script>
+<link rel="stylesheet" href="index.css"> 
+</head>
+<body class="w3-light-grey">
+
+<!-- Top container -->
+<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i> Menu</button>
+  <span class="w3-bar-item w3-right"><img src="home_icon.jpg" alt="Description of Image" style="width:50px;"></span>
+</div>
+
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+  <div class="w3-container">
+    <h5>Dashboard </h5>
+    <hr>
+  </div>
+  
+  <div class="w3-bar w3-center centered-items">
+    <a href="#" class="w3-bar-item w3-button w3-padding" onclick="show('AnnualResult')"> Annual Real Estate</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding w3-blue" onclick="show('QoQResult')">Quarterly Real Estate </a> 
+    <a href="#" class="w3-bar-item w3-button w3-padding" onclick="show('HotRealEstate')"> Hottest Real Estate</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding" onclick="show('GRM')"> Gross Rent Multiplier (GRM)</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding" onclick="show('history')">Property Price History</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding" onclick="show('activeHistory')">Active Price History</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding" onclick="show('Investment')"> Investment Calculator</a>
+</div>
+
+</nav>
+
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+  <!-- Header -->
+<header class="w3-container" style="padding-top:22px">
+  
+</header>
+
+<div class="w3-panel">
+  <div class="w3-row-padding" style="margin:0 -16px">
+      <div class="w3-full">
+          <div id="AnnualResult" class="content">
+              <iframe 
+                  title="Annual Real Estate Appreciation by County" 
+                  aria-label="Map" 
+                  id="datawrapper-chart-vbydZ" 
+                  src="https://datawrapper.dwcdn.net/vbydZ/10/" 
+                  scrolling="no" 
+                  frameborder="0" 
+                  style="width: 0; min-width: 100% !important; border: none;" 
+                  height="630" 
+                  data-external="1">
+              </iframe>
+              <script type="text/javascript">
+                  !function() {
+                      "use strict";
+                      window.addEventListener("message", function(a) {
+                          if (void 0 !== a.data["datawrapper-height"]) {
+                              var e = document.querySelectorAll("iframe");
+                              for (var t in a.data["datawrapper-height"]) {
+                                  for (var r = 0; r < e.length; r++) {
+                                      if (e[r].contentWindow === a.source) {
+                                          var i = a.data["datawrapper-height"][t] + "px";
+                                          e[r].style.height = i;
+                                      }
+                                  }
+                              }
+                          }
+                      });
+                  }();
+              </script>
+          </div>
+          <div id="QoQResult" class="content">
+              <div class="iframe-container" id="datawrapper-chart-p4NM9-container">
+                  <iframe 
+                      title="Quarterly Real Estate Appreciation by County"
+                      aria-label="Map" 
+                      id="datawrapper-chart-S6BkG" 
+                      src="https://datawrapper.dwcdn.net/S6BkG/4/" 
+                      scrolling="no" 
+                      frameborder="0" 
+                      style="width: 0; min-width: 100% !important; border: none;" 
+                      height="630"
+                      data-external="1">
+                  </iframe>
+                  <script type="text/javascript">
+                      !function() {
+                          "use strict";
+                          window.addEventListener("message", function(a) {
+                              if (void 0 !== a.data["datawrapper-height"]) {
+                                  var e = document.querySelectorAll("iframe");
+                                  for (var t in a.data["datawrapper-height"]) {
+                                      for (var r = 0; r < e.length; r++) {
+                                          if (e[r].contentWindow === a.source) {
+                                              var i = a.data["datawrapper-height"][t] + "px";
+                                              e[r].style.height = i;
+                                          }
+                                      }
+                                  }
+                              }
+                          });
+                      }();
+                  </script>
+              </div>
+          </div>
+          <div id="HotRealEstate" class="content">
+              <iframe 
+                  title="Top 100 Hottest Real Estate Markets by Appreciation" 
+                  aria-label="Map" 
+                  id="datawrapper-chart-p4NM9" 
+                  src="https://datawrapper.dwcdn.net/p4NM9/10/" 
+                  scrolling="no" 
+                  frameborder="0" 
+                  style="width: 0; min-width: 100% !important; border: none;" 
+                  height="506" 
+                  data-external="1">
+              </iframe>
+              <script type="text/javascript">
+                  !function() {
+                      "use strict";
+                      window.addEventListener("message", function(a) {
+                          if (void 0 !== a.data["datawrapper-height"]) {
+                              var e = document.querySelectorAll("iframe");
+                              for (var t in a.data["datawrapper-height"]) {
+                                  for (var r = 0; r < e.length; r++) {
+                                      if (e[r].contentWindow === a.source) {
+                                          var i = a.data["datawrapper-height"][t] + "px";
+                                          e[r].style.height = i;
+                                      }
+                                  }
+                              }
+                          }
+                      });
+                  }();
+              </script>
+          </div>
+          <div id="GRM" class="content">
+              <iframe 
+                  title="Gross Rent Multiplier (GRM) in 250 Largest Cities" 
+                  aria-label="Map" 
+                  id="datawrapper-chart-XOQtt" 
+                  src="https://datawrapper.dwcdn.net/XOQtt/12/" 
+                  scrolling="no" 
+                  frameborder="0" 
+                  style="width: 0; min-width: 100% !important; border: none;" 
+                  height="485" 
+                  data-external="1">
+              </iframe>
+              <script type="text/javascript">
+                  !function() {
+                      "use strict";
+                      window.addEventListener("message", function(a) {
+                          if (void 0 !== a.data["datawrapper-height"]) {
+                              var e = document.querySelectorAll("iframe");
+                              for (var t in a.data["datawrapper-height"]) {
+                                  for (var r = 0; r < e.length; r++) {
+                                      if (e[r].contentWindow === a.source) {
+                                          var i = a.data["datawrapper-height"][t] + "px";
+                                          e[r].style.height = i;
+                                      }
+                                  }
+                              }
+                          }
+                      });
+                  }();
+              </script>
+          </div>
+          <div id="history" class="content">
+              <div style="width: 75%; margin: auto;">
+                  <canvas id="myLineChart"></canvas>
+              </div>
+              <script src="chart.js"></script>
+              <form id="searchForm" onsubmit="return handleFormSubmit(event)">
+                <label for="query">Enter City to Search:</label>
+                <input type="text" id="query" name="query">
+                <input type="button" value="Search" onclick="fetchDataForChart()">
+              </form>
+            <script src="search.js"></script>
+          </div>
+          <div id="Investment" class="content">
+
+        </div>
+      </div>
+  </div>
+</div>
+
+
+
+  <div class="w3-container w3-dark-grey w3-padding-32">
+    <div class="w3-row">
+      <div class="w3-container w3-twothird">
+        <h5 class="w3-bottombar w3-border-green">Demographic</h5>
+        <p>Language</p>
+        <p>Country</p>
+        <p>City</p>
+      </div>
+      <div class="w3-container w3-third">
+        <h5 class="w3-bottombar w3-border-red">System</h5>    
+        <p><button onclick="redirectToValid()">Show All Valid Addresses</button></p>
+        <script>
+            function redirectToValid() {
+                window.location.href = "/valid";
+            }
+        </script>
+        <p><button onclick="redirectToInvalid()">Show All Invalid Addresses</button></p>
+        <script>
+            function redirectToInvalid() {
+                window.location.href = "/invalid";
+            }
+        </script>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- End page content -->
+</div>
+
+<script>
+// Get the Sidebar
+var mySidebar = document.getElementById("mySidebar");
+
+// Get the DIV with overlay effect
+var overlayBg = document.getElementById("myOverlay");
+
+// Toggle between showing and hiding the sidebar, and add overlay effect
+function w3_open() {
+  if (mySidebar.style.display === 'block') {
+    mySidebar.style.display = 'none';
+    overlayBg.style.display = "none";
+  } else {
+    mySidebar.style.display = 'block';
+    overlayBg.style.display = "block";
+  }
+}
+
+// Close the sidebar with the close button
+function w3_close() {
+  mySidebar.style.display = "none";
+  overlayBg.style.display = "none";
+}
+
+
+function switchIframe(iframeID) {
+  // First, hide all iframes
+  var iframeContainers = document.querySelectorAll('.iframe-container');
+  for (var i = 0; i < iframeContainers.length; i++) {
+      iframeContainers[i].style.display = 'none';
+  }
+
+  // Now, display the selected iframe
+  document.getElementById('datawrapper-chart-' + iframeID + '-container').style.display = 'block';
+}
+
+
+function show(id) {
+  // Get all content divs and hide them
+  var contents = document.querySelectorAll('.content');
+  for (var i = 0; i < contents.length; i++) {
+      contents[i].style.display = 'none';
+  }
+
+  // Show the selected content div
+  document.getElementById(id).style.display = 'block';
+}
+
+// Hide all content divs on page load except the overview
+window.onload = function() {
+  var contents = document.querySelectorAll('.content');
+  for (var i = 0; i < contents.length; i++) {
+      contents[i].style.display = 'none';
+  }
+  document.getElementById('QoQResult').style.display = 'block';
+}
+
+</script>
+
+</body>
+
+</html>
