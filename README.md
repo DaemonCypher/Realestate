@@ -40,13 +40,13 @@ untill you have grab all the address from the state.
 ```
 python3 setup.py -i 1000 -n ct -f
 ```
--i flag for how many address to be proccess
+-i flag for how many address to be proccess(Required).
 
 
--n flag for the state to be proccess
+-n flag for the state to be proccess(Required).
 
 
--f flag to convert the file and remove unnecessary addresses. Only need to use the flag once for the first run of a new state
+-f flag to convert the file and remove unnecessary addresses. Only need to use the flag once for the first run of a new state(Optional).
 
 
 # Dispaly Web App
