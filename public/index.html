@@ -8,8 +8,6 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="https://d3js.org/d3.v5.min.js"></script>
-<script src="https://d3js.org/topojson.v3.min.js"></script>
 <link rel="stylesheet" href="index.css"> 
 </head>
 <body class="w3-light-grey">
@@ -66,24 +64,6 @@
                   height="630" 
                   data-external="1">
               </iframe>
-              <script type="text/javascript">
-                  !function() {
-                      "use strict";
-                      window.addEventListener("message", function(a) {
-                          if (void 0 !== a.data["datawrapper-height"]) {
-                              var e = document.querySelectorAll("iframe");
-                              for (var t in a.data["datawrapper-height"]) {
-                                  for (var r = 0; r < e.length; r++) {
-                                      if (e[r].contentWindow === a.source) {
-                                          var i = a.data["datawrapper-height"][t] + "px";
-                                          e[r].style.height = i;
-                                      }
-                                  }
-                              }
-                          }
-                      });
-                  }();
-              </script>
           </div>
           <div id="QoQResult" class="content">
               <div class="iframe-container" id="datawrapper-chart-p4NM9-container">
@@ -98,24 +78,6 @@
                       height="630"
                       data-external="1">
                   </iframe>
-                  <script type="text/javascript">
-                      !function() {
-                          "use strict";
-                          window.addEventListener("message", function(a) {
-                              if (void 0 !== a.data["datawrapper-height"]) {
-                                  var e = document.querySelectorAll("iframe");
-                                  for (var t in a.data["datawrapper-height"]) {
-                                      for (var r = 0; r < e.length; r++) {
-                                          if (e[r].contentWindow === a.source) {
-                                              var i = a.data["datawrapper-height"][t] + "px";
-                                              e[r].style.height = i;
-                                          }
-                                      }
-                                  }
-                              }
-                          });
-                      }();
-                  </script>
               </div>
           </div>
           <div id="HotRealEstate" class="content">
@@ -130,24 +92,6 @@
                   height="506" 
                   data-external="1">
               </iframe>
-              <script type="text/javascript">
-                  !function() {
-                      "use strict";
-                      window.addEventListener("message", function(a) {
-                          if (void 0 !== a.data["datawrapper-height"]) {
-                              var e = document.querySelectorAll("iframe");
-                              for (var t in a.data["datawrapper-height"]) {
-                                  for (var r = 0; r < e.length; r++) {
-                                      if (e[r].contentWindow === a.source) {
-                                          var i = a.data["datawrapper-height"][t] + "px";
-                                          e[r].style.height = i;
-                                      }
-                                  }
-                              }
-                          }
-                      });
-                  }();
-              </script>
           </div>
           <div id="GRM" class="content">
               <iframe 
@@ -161,38 +105,37 @@
                   height="485" 
                   data-external="1">
               </iframe>
-              <script type="text/javascript">
-                  !function() {
-                      "use strict";
-                      window.addEventListener("message", function(a) {
-                          if (void 0 !== a.data["datawrapper-height"]) {
-                              var e = document.querySelectorAll("iframe");
-                              for (var t in a.data["datawrapper-height"]) {
-                                  for (var r = 0; r < e.length; r++) {
-                                      if (e[r].contentWindow === a.source) {
-                                          var i = a.data["datawrapper-height"][t] + "px";
-                                          e[r].style.height = i;
-                                      }
-                                  }
-                              }
-                          }
-                      });
-                  }();
-              </script>
           </div>
           <div id="history" class="content">
               <div style="width: 75%; margin: auto;">
-                  <canvas id="myLineChart"></canvas>
+                  <canvas id="historyChart"></canvas>
               </div>
-              <script src="chart.js"></script>
+              <script src="sold.js"></script>
               <form id="searchForm" onsubmit="return handleFormSubmit(event)">
                 <label for="query">Enter City to Search:</label>
                 <input type="text" id="query" name="query">
                 <input type="button" value="Search" onclick="fetchDataForChart()">
               </form>
-            <script src="search.js"></script>
           </div>
+
+          <div id="activeHistory" class="content">
+            <div style="width: 75%; margin: auto;">
+                <canvas id="activeHistoryChart"></canvas>
+            </div>
+            <script src="active.js"></script>
+            <form id="searchForm" onsubmit="return handleFormSubmit(event)">
+              <label for="query">Enter City to Search:</label>
+              <input type="text" id="query" name="query">
+              <input type="button" value="Search" onclick="fetchDataForChart()">
+            </form>
+          <script src="search.js"></script>
+        </div>
+
           <div id="Investment" class="content">
+            <div style="width: 75%; margin: auto;">
+                <canvas id="myInvestmentChart"></canvas>
+            </div>
+        </div>
 
         </div>
       </div>
@@ -212,83 +155,19 @@
       <div class="w3-container w3-third">
         <h5 class="w3-bottombar w3-border-red">System</h5>    
         <p><button onclick="redirectToValid()">Show All Valid Addresses</button></p>
-        <script>
-            function redirectToValid() {
-                window.location.href = "/valid";
-            }
-        </script>
+
         <p><button onclick="redirectToInvalid()">Show All Invalid Addresses</button></p>
-        <script>
-            function redirectToInvalid() {
-                window.location.href = "/invalid";
-            }
-        </script>
+    
       </div>
     </div>
   </div>
 
-
+  <script src= "database.js"></script>
   <!-- End page content -->
 </div>
 
-<script>
-// Get the Sidebar
-var mySidebar = document.getElementById("mySidebar");
-
-// Get the DIV with overlay effect
-var overlayBg = document.getElementById("myOverlay");
-
-// Toggle between showing and hiding the sidebar, and add overlay effect
-function w3_open() {
-  if (mySidebar.style.display === 'block') {
-    mySidebar.style.display = 'none';
-    overlayBg.style.display = "none";
-  } else {
-    mySidebar.style.display = 'block';
-    overlayBg.style.display = "block";
-  }
-}
-
-// Close the sidebar with the close button
-function w3_close() {
-  mySidebar.style.display = "none";
-  overlayBg.style.display = "none";
-}
-
-
-function switchIframe(iframeID) {
-  // First, hide all iframes
-  var iframeContainers = document.querySelectorAll('.iframe-container');
-  for (var i = 0; i < iframeContainers.length; i++) {
-      iframeContainers[i].style.display = 'none';
-  }
-
-  // Now, display the selected iframe
-  document.getElementById('datawrapper-chart-' + iframeID + '-container').style.display = 'block';
-}
-
-
-function show(id) {
-  // Get all content divs and hide them
-  var contents = document.querySelectorAll('.content');
-  for (var i = 0; i < contents.length; i++) {
-      contents[i].style.display = 'none';
-  }
-
-  // Show the selected content div
-  document.getElementById(id).style.display = 'block';
-}
-
-// Hide all content divs on page load except the overview
-window.onload = function() {
-  var contents = document.querySelectorAll('.content');
-  for (var i = 0; i < contents.length; i++) {
-      contents[i].style.display = 'none';
-  }
-  document.getElementById('QoQResult').style.display = 'block';
-}
-
-</script>
+<script src= "embededImage.js"></script>
+<script src=" dashboard.js"> </script>
 
 </body>
 
