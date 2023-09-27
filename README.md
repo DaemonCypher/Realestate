@@ -62,3 +62,5 @@ npm run start
 * Containarize code
 * Add realtor metrics/dashboards
 * Add feature for process_geojson_data() to write in batches while collecting data instead of after
+* Machine learning price prediction
+* Machine learning inventory prediction
