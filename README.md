@@ -26,7 +26,7 @@ Tech Stack: Python3, SQLite3, Node.js, Express.js
 npm install express sqlite3 body-parser child_process
 ```
 ```
-pip install requests aiohttp geopandas tqdm
+pip install requests aiohttp geopandas tqdm pandas numpy tensorflow scikit-learn
 ```
 
 # Intial Setup
