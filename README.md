@@ -26,12 +26,12 @@ Tech Stack: Python3, SQLite3, Node.js, Express.js
 npm install express sqlite3 body-parser child_process
 ```
 ```
-pip install requests aiohttp geopandas tqdm
+pip install requests aiohttp geopandas tqdm pandas numpy tensorflow scikit-learn
 ```
 
 # Intial Setup
 Download the region of realestate to look at from [openAddress.io](https://batch.openaddresses.io/data#map=0/0/0 "@embed"); this will reguire you to have an account with openAddress.io. 
-Would recommend only downloading the files for the region you want to look at as the files downloaded are quite large and with file processing and creation the code size will be quite large (rough estimate with all states/regions ~50gb).
+Would recommend only downloading the files for the region you want to look at as the files downloaded are quite large and with file processing and creation the code size will be quite large (rough estimate with all states/regions ~150gb).
 
 Unpack the downloaded files and drop them in \Realestae\downloads folder. Run the following command in the root directory. This will start collecting data from state you want to look at, 
 depending on the state this will take a while. A 100,000 address takes about 42 minutes this is with 32gb ram. The code can be ran in chunks so if you are not able to run the code for several hours you can run the code in increments of 100,000(more or less)
@@ -62,3 +62,5 @@ npm run start
 * Containarize code
 * Add realtor metrics/dashboards
 * Add feature for process_geojson_data() to write in batches while collecting data instead of after
+* Machine learning price prediction
+* Machine learning inventory prediction
