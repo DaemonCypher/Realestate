@@ -53,3 +53,15 @@ window.onload = function() {
   }
   document.getElementById('QoQResult').style.display = 'block';
 }
+
+function showCalculator(option) {
+  var sections = ["Payback", "ROI", "TenantTurnover", "RentPerProperty","OER","RMC"];
+  sections.forEach(function(section) {
+      var elem = document.getElementById(section);
+      if (section === option) {
+          elem.style.display = "block";
+      } else {
+          elem.style.display = "none";
+      }
+  });
+}

@@ -31,7 +31,7 @@
     <a href="#" class="w3-bar-item w3-button w3-padding" onclick="show('HotRealEstate')"> Hottest Real Estate</a>
     <a href="#" class="w3-bar-item w3-button w3-padding" onclick="show('GRM')"> Gross Rent Multiplier (GRM)</a>
     <a href="#" class="w3-bar-item w3-button w3-padding" onclick="show('history')">Property Price History</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding" onclick="show('activeHistory')">Active Price History</a>
+    <a href="#" class="w3-bar-item w3-button w3-padding" onclick="show('realEstateInvestor')">Real Estate Investor</a>
     <a href="#" class="w3-bar-item w3-button w3-padding" onclick="show('Investment')"> Investment Calculator</a>
 </div>
 
@@ -117,25 +117,104 @@
                 <input type="button" value="Search" onclick="fetchDataForChart()">
               </form>
           </div>
-
-          <div id="activeHistory" class="content">
-            <div style="width: 75%; margin: auto;">
-                <canvas id="activeHistoryChart"></canvas>
+          <div id="realEstateInvestor" class="content">
+            <div class="w3-bar w3-center centered-items">
+              <select class="w3-select w3-padding" onchange="showCalculator(this.value)">
+                <option value="" disabled selected>Select an option</option>
+                <option value="PaybackPeriod">Payback Period</option>
+                <option value="ROI">Return on Investment</option>
+                <option value="TenantTurnover">Tenant Turnover</option>
+                <option value="RentPerProperty">Average Rent Price per Property</option>
+                <option value="OER">Operating Expense Ratio</option>
+                <option value="RMC">Repair and Maintenance Costs</option>
+            </select>
+            
             </div>
-            <script src="active.js"></script>
-            <form id="searchForm" onsubmit="return handleFormSubmit(event)">
-              <label for="query">Enter City to Search:</label>
-              <input type="text" id="query" name="query">
-              <input type="button" value="Search" onclick="fetchDataForChart()">
-            </form>
-          <script src="search.js"></script>
-        </div>
+          </div>
+      
+          <div id="Payback" class="content">
+            <label for="paybackInvestment">Initial Investment:</label>
+            <input type="number" id="paybackInvestment" name="paybackInvestment" required>
+            <label for="annualCashInflow">Annual Cash Inflow:</label>
+            <input type="number" id="annualCashInflow" name="annualCashInflow" required>
+            <input type="button" value="Calculate" onclick="calculateAndDisplayPaybackPeriod()">
+        
+            <div id="resultPayback"></div>
+            <script src ="calculator/payback.js"></script>
+          </div>
 
-          <div id="Investment" class="content">
-            <div style="width: 75%; margin: auto;">
-                <canvas id="myInvestmentChart"></canvas>
-            </div>
+          <div id="ROI" class="content">
+            <label for="roiInvestment">Initial Investment:</label>
+            <input type="number" id="roiInvestment" name="roiInvestment" required>
+            <br>
+            <label for="finalInvestment">Final Value of Investment:</label>
+            <input type="number" id="finalInvestment" name="finalInvestment" required>
+            <br>
+            <button onclick="calculateROI()">Calculate ROI</button>
+
+            <div id="resultROI"></div>
+            <script src ="calculator/roi.js"></script>
+          </div>
+
+          <div id="TenantTurnover" class="content" style="display:none;">
+            <label for="totalUnits">Total Units:</label>
+            <input type="number" id="totalUnits" name="totalUnits" required>
+            <br>
+        
+            <label for="vacantUnits">Vacant Units:</label>
+            <input type="number" id="vacantUnits" name="vacantUnits" required>
+            <br>
+        
+            <button onclick="calculateTenantTurnover()">Calculate Tenant Turnover</button>
+        
+            <div id="resultTenantTurnover"></div>
+            <script src="calculator/turnover.js"></script>  <!-- Assume you have a script to handle the calculation -->
+          </div>
+
+          <div id="RentPerProperty" class="content" style="display:none;">
+            <label for="totalRentCollected">Total Rent Collected:</label>
+            <input type="number" id="totalRentCollected" name="totalRentCollected" required>
+            <br>
+            <label for="numberRentedUnits">Number of Rented Units:</label>
+            <input type="number" id="numberRentedUnits" name="numberRentedUnits" required>
+            <br>
+            <button onclick="calculateAverageRent()">Calculate Average Rent</button>
+            <div id="resultAverageRent"></div>
+            <script src="calculator/turnover.js"></script>
+          </div>
+
+          <div id="OER" class="content" style="display:none;">
+            <label for="operatingExpenses">Operating Expenses:</label>
+            <input type="number" id="operatingExpenses" name="operatingExpenses" required>
+            <br>
+            <label for="grossOperatingIncome">Gross Operating Income:</label>
+            <input type="number" id="grossOperatingIncome" name="grossOperatingIncome" required>
+            <br>
+            <button onclick="calculateOER()">Calculate OER</button>
+        
+            <div id="resultOER"></div>
+            <script src="oer.js"></script>
+          </div>
+
+          <div id="RMC" class="content" style="display:none;">
+            <label for="repair1">Repair 1 Cost:</label>
+            <input type="number" id="repair1" name="repair1" required>
+            <br>
+            <label for="repair2">Repair 2 Cost:</label>
+            <input type="number" id="repair2" name="repair2" required>
+            <br>
+            <label for="maintenance1">Maintenance 1 Cost:</label>
+            <input type="number" id="maintenance1" name="maintenance1" required>
+            <br>
+            <label for="maintenance2">Maintenance 2 Cost:</label>
+            <input type="number" id="maintenance2" name="maintenance2" required>
+            <br>
+            <button onclick="calculateRMC()">Calculate Total Repair and Maintenance Costs</button>
+        
+            <div id="resultRMC"></div>
         </div>
+        
+  
 
         </div>
       </div>
@@ -168,6 +247,13 @@
 
 <script src= "embededImage.js"></script>
 <script src=" dashboard.js"> </script>
+<script >
+  function togglePaybackPeriod() {
+    const activeHistory = document.getElementById('Payback');
+    activeHistory.style.display = 'block';
+  }
+  
+</script>
 
 </body>
 
