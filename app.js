@@ -63,13 +63,10 @@ app.post('/sold', (req, res) => {
             return res.status(400).json({"error": err.message});
         }
 
-        if (rows.length === 0)
-        {
+        if (rows.length === 0){
             res.sendFile(__dirname + '/public/error.html')
-        }
-        else
-        {
-        res.json(rows);
+        }else {
+            res.json(rows);
         }
     });
 });
@@ -87,13 +84,10 @@ app.post('/active', (req, res) => {
             return res.status(400).json({"error": err.message});
         }
 
-        if (rows.length === 0)
-        {
+        if (rows.length === 0){
             res.sendFile(__dirname + '/public/error.html')
-        }
-        else
-        {
-        res.json(rows);
+        }else{
+            res.json(rows);
         }
     });
 });
@@ -115,17 +109,11 @@ app.post('/search', (req, res) => {
         if (rows.length === 0)
         {
             res.sendFile(__dirname + '/public/error.html')
-        }
-        else
-        {
-        res.json(rows);
+        }else {
+            res.json(rows);
         }
     });
 });
-
-
-
-
 
 
 app.listen(PORT, () => {

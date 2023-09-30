@@ -1,260 +1,259 @@
 <!DOCTYPE html>
 <html>
-<head>
-<title>Realestate Viewer</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link rel="stylesheet" href="index.css"> 
-</head>
-<body class="w3-light-grey">
+  <head>
+    <title>Realestate Viewer</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-<!-- Top container -->
-<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
-  <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i> Menu</button>
-  <span class="w3-bar-item w3-right"><img src="home_icon.jpg" alt="Description of Image" style="width:50px;"></span>
-</div>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Raleway"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
 
-<!-- Sidebar/menu -->
-<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
-  <div class="w3-container">
-    <h5>Dashboard </h5>
-    <hr>
-  </div>
-  
-  <div class="w3-bar w3-center centered-items">
-    <a href="#" class="w3-bar-item w3-button w3-padding" onclick="show('AnnualResult')"> Annual Real Estate</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding w3-blue" onclick="show('QoQResult')">Quarterly Real Estate </a> 
-    <a href="#" class="w3-bar-item w3-button w3-padding" onclick="show('HotRealEstate')"> Hottest Real Estate</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding" onclick="show('GRM')"> Gross Rent Multiplier (GRM)</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding" onclick="show('history')">Property Price History</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding" onclick="show('realEstateInvestor')">Real Estate Investor</a>
-    <a href="#" class="w3-bar-item w3-button w3-padding" onclick="show('Investment')"> Investment Calculator</a>
-</div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      href="https://unpkg.com/gridstack@4/dist/gridstack.min.css"
+      rel="stylesheet"
+    />
 
-</nav>
+    <script src="https://unpkg.com/gridstack@4/dist/gridstack-h5.js"></script>
+
+  </head>
+      <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="dashboard.css" />
+
+  <body class="w3-light-grey">
+    <!-- Top container -->
+    <div class="w3-bar w3-top w3-black w3-large" style="z-index: 4">
+      <button
+        class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey"
+        onclick="w3_open();"
+      >
+        <i class="fa fa-bars"></i> Menu
+      </button>
+      <span class="w3-bar-item w3-right"
+        ><img
+          src="home_icon.jpg"
+          alt="Description of Image"
+          style="width: 50px"
+      /></span>
+    </div>
 
 
-<!-- Overlay effect when opening sidebar on small screens -->
-<div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
+    <!-- Sidebar/menu -->
+    <nav
+      class="w3-sidebar w3-collapse w3-white w3-animate-left"
+      style="z-index: 3; width: 300px"
+      id="mySidebar"
+    >
+      <br />
+      <div class="w3-container">
+        <h5>Dashboard</h5>
+        <hr />
+      </div>
 
-<!-- !PAGE CONTENT! -->
-<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+      <div class="w3-bar w3-center centered-items">
+        <a
+          href="#"
+          class="w3-bar-item w3-button w3-padding"
+          onclick="show('AnnualResult')"
+        >
+          Annual Real Estate</a
+        >
+        <a
+          href="#"
+          class="w3-bar-item w3-button w3-padding"
+          onclick="show('QoQResult')"
+          >Quarterly Real Estate
+        </a>
+        <a
+          href="#"
+          class="w3-bar-item w3-button w3-padding"
+          onclick="show('HotRealEstate')"
+        >
+          Hottest Real Estate</a
+        >
+        <a
+          href="#"
+          class="w3-bar-item w3-button w3-padding"
+          onclick="show('GRM')"
+        >
+          Gross Rent Multiplier (GRM)</a
+        >
+        <a
+          href="#"
+          class="w3-bar-item w3-button w3-padding"
+          onclick="show('history')"
+          >Property Price History</a
+        >
+        <a
+          href="#"
+          class="w3-bar-item w3-button w3-padding"
+          onclick="show('realEstateInvestor')"
+          >Real Estate Investor</a
+        >
+        <a
+          href="#"
+          class="w3-bar-item w3-button w3-padding"
+          onclick="show('test')"
+          >Test</a
+        >
+      </div>
+    </nav>
 
-  <!-- Header -->
-<header class="w3-container" style="padding-top:22px">
-  
-</header>
+    <!-- Overlay effect when opening sidebar on small screens -->
+    <div
+      class="w3-overlay w3-hide-large w3-animate-opacity"
+      onclick="w3_close()"
+      style="cursor: pointer"
+      title="close side menu"
+      id="myOverlay"
+    ></div>
 
-<div class="w3-panel">
-  <div class="w3-row-padding" style="margin:0 -16px">
-      <div class="w3-full">
-          <div id="AnnualResult" class="content">
-              <iframe 
-                  title="Annual Real Estate Appreciation by County" 
-                  aria-label="Map" 
-                  id="datawrapper-chart-vbydZ" 
-                  src="https://datawrapper.dwcdn.net/vbydZ/10/" 
-                  scrolling="no" 
-                  frameborder="0" 
-                  style="width: 0; min-width: 100% !important; border: none;" 
-                  height="630" 
-                  data-external="1">
+    <!-- !PAGE CONTENT! -->
+    <div class="w3-main" style="margin-left: 300px; margin-top: 43px">
+      <!-- Header -->
+      <header class="w3-container" style="padding-top: 22px"></header>
+
+      <div class="w3-panel">
+        <div class="w3-row-padding" style="margin: 0 -16px">
+          <div class="w3-full">
+            <div id="AnnualResult" class="content">
+              <iframe
+                title="Annual Real Estate Appreciation by County"
+                aria-label="Map"
+                id="datawrapper-chart-vbydZ"
+                src="https://datawrapper.dwcdn.net/vbydZ/10/"
+                scrolling="no"
+                frameborder="0"
+                style="width: 0; min-width: 100% !important; border: none"
+                height="630"
+                data-external="1"
+              >
               </iframe>
-          </div>
-          <div id="QoQResult" class="content">
-              <div class="iframe-container" id="datawrapper-chart-p4NM9-container">
-                  <iframe 
-                      title="Quarterly Real Estate Appreciation by County"
-                      aria-label="Map" 
-                      id="datawrapper-chart-S6BkG" 
-                      src="https://datawrapper.dwcdn.net/S6BkG/4/" 
-                      scrolling="no" 
-                      frameborder="0" 
-                      style="width: 0; min-width: 100% !important; border: none;" 
-                      height="630"
-                      data-external="1">
-                  </iframe>
-              </div>
-          </div>
-          <div id="HotRealEstate" class="content">
-              <iframe 
-                  title="Top 100 Hottest Real Estate Markets by Appreciation" 
-                  aria-label="Map" 
-                  id="datawrapper-chart-p4NM9" 
-                  src="https://datawrapper.dwcdn.net/p4NM9/10/" 
-                  scrolling="no" 
-                  frameborder="0" 
-                  style="width: 0; min-width: 100% !important; border: none;" 
-                  height="506" 
-                  data-external="1">
+            </div>
+
+            <div id="QoQResult" class="content">
+              <iframe
+                title="Quarterly Real Estate Appreciation by County"
+                aria-label="Map"
+                id="datawrapper-chart-S6BkG"
+                src="https://datawrapper.dwcdn.net/S6BkG/4/"
+                scrolling="no"
+                frameborder="0"
+                style="width: 0; min-width: 100% !important; border: none"
+                height="630"
+                data-external="1"
+              >
               </iframe>
-          </div>
-          <div id="GRM" class="content">
-              <iframe 
-                  title="Gross Rent Multiplier (GRM) in 250 Largest Cities" 
-                  aria-label="Map" 
-                  id="datawrapper-chart-XOQtt" 
-                  src="https://datawrapper.dwcdn.net/XOQtt/12/" 
-                  scrolling="no" 
-                  frameborder="0" 
-                  style="width: 0; min-width: 100% !important; border: none;" 
-                  height="485" 
-                  data-external="1">
+            </div>
+
+            <div id="HotRealEstate" class="content">
+              <iframe
+                title="Top 100 Hottest Real Estate Markets by Appreciation"
+                aria-label="Map"
+                id="datawrapper-chart-p4NM9"
+                src="https://datawrapper.dwcdn.net/p4NM9/10/"
+                scrolling="no"
+                frameborder="0"
+                style="width: 0; min-width: 100% !important; border: none"
+                height="506"
+                data-external="1"
+              >
               </iframe>
-          </div>
-          <div id="history" class="content">
-              <div style="width: 75%; margin: auto;">
-                  <canvas id="historyChart"></canvas>
+            </div>
+
+            <div id="GRM" class="content">
+              <iframe
+                title="Gross Rent Multiplier (GRM) in 250 Largest Cities"
+                aria-label="Map"
+                id="datawrapper-chart-XOQtt"
+                src="https://datawrapper.dwcdn.net/XOQtt/12/"
+                scrolling="no"
+                frameborder="0"
+                style="width: 0; min-width: 100% !important; border: none"
+                height="485"
+                data-external="1"
+              >
+              </iframe>
+            </div>
+
+            <div id="history" class="content">
+              <div style="width: 75%; margin: auto">
+                <canvas id="historyChart"></canvas>
               </div>
               <script src="sold.js"></script>
               <form id="searchForm" onsubmit="return handleFormSubmit(event)">
                 <label for="query">Enter City to Search:</label>
-                <input type="text" id="query" name="query">
-                <input type="button" value="Search" onclick="fetchDataForChart()">
+                <input type="text" id="query" name="query" />
+                <input
+                  type="button"
+                  value="Search"
+                  onclick="fetchDataForChart()"
+                />
               </form>
-          </div>
-          <div id="realEstateInvestor" class="content">
-            <div class="w3-bar w3-center centered-items">
-              <select class="w3-select w3-padding" onchange="showCalculator(this.value)">
-                <option value="" disabled selected>Select an option</option>
-                <option value="PaybackPeriod">Payback Period</option>
-                <option value="ROI">Return on Investment</option>
-                <option value="TenantTurnover">Tenant Turnover</option>
-                <option value="RentPerProperty">Average Rent Price per Property</option>
-                <option value="OER">Operating Expense Ratio</option>
-                <option value="RMC">Repair and Maintenance Costs</option>
-            </select>
-            
+            </div>
+
+            <script src="calculator/payback.js"></script>
+            <script src="calculator/oer.js"></script>
+            <script src="calculator/rentPerProperty.js"></script>
+            <script src="calculator/rmc.js"></script>
+            <script src="calculator/roi.js"></script>
+            <script src="calculator/turnover.js"></script>
+
+            <div id="realEstateInvestor" class="w3-row content">
+              <div id="delete-zone">
+                <i class="fa fa-trash-o" aria-hidden="true" style="font-size:40px"></i>
+                <p style="font-size:24px;line-height:1">Drag and Drop Here to Delete</p>
+              </div>
+              <div class="w3-col centered-items" style="width: 150px">
+                <button onclick="createCard()">Create Card</button>
+              </div>
+
+              <div class="grid-stack"></div>
+
+              <script src="https://unpkg.com/gridstack@4/dist/gridstack-h5.js"></script>
             </div>
           </div>
-      
-          <div id="Payback" class="content">
-            <label for="paybackInvestment">Initial Investment:</label>
-            <input type="number" id="paybackInvestment" name="paybackInvestment" required>
-            <label for="annualCashInflow">Annual Cash Inflow:</label>
-            <input type="number" id="annualCashInflow" name="annualCashInflow" required>
-            <input type="button" value="Calculate" onclick="calculateAndDisplayPaybackPeriod()">
-        
-            <div id="resultPayback"></div>
-            <script src ="calculator/payback.js"></script>
-          </div>
-
-          <div id="ROI" class="content">
-            <label for="roiInvestment">Initial Investment:</label>
-            <input type="number" id="roiInvestment" name="roiInvestment" required>
-            <br>
-            <label for="finalInvestment">Final Value of Investment:</label>
-            <input type="number" id="finalInvestment" name="finalInvestment" required>
-            <br>
-            <button onclick="calculateROI()">Calculate ROI</button>
-
-            <div id="resultROI"></div>
-            <script src ="calculator/roi.js"></script>
-          </div>
-
-          <div id="TenantTurnover" class="content" style="display:none;">
-            <label for="totalUnits">Total Units:</label>
-            <input type="number" id="totalUnits" name="totalUnits" required>
-            <br>
-        
-            <label for="vacantUnits">Vacant Units:</label>
-            <input type="number" id="vacantUnits" name="vacantUnits" required>
-            <br>
-        
-            <button onclick="calculateTenantTurnover()">Calculate Tenant Turnover</button>
-        
-            <div id="resultTenantTurnover"></div>
-            <script src="calculator/turnover.js"></script>  <!-- Assume you have a script to handle the calculation -->
-          </div>
-
-          <div id="RentPerProperty" class="content" style="display:none;">
-            <label for="totalRentCollected">Total Rent Collected:</label>
-            <input type="number" id="totalRentCollected" name="totalRentCollected" required>
-            <br>
-            <label for="numberRentedUnits">Number of Rented Units:</label>
-            <input type="number" id="numberRentedUnits" name="numberRentedUnits" required>
-            <br>
-            <button onclick="calculateAverageRent()">Calculate Average Rent</button>
-            <div id="resultAverageRent"></div>
-            <script src="calculator/turnover.js"></script>
-          </div>
-
-          <div id="OER" class="content" style="display:none;">
-            <label for="operatingExpenses">Operating Expenses:</label>
-            <input type="number" id="operatingExpenses" name="operatingExpenses" required>
-            <br>
-            <label for="grossOperatingIncome">Gross Operating Income:</label>
-            <input type="number" id="grossOperatingIncome" name="grossOperatingIncome" required>
-            <br>
-            <button onclick="calculateOER()">Calculate OER</button>
-        
-            <div id="resultOER"></div>
-            <script src="oer.js"></script>
-          </div>
-
-          <div id="RMC" class="content" style="display:none;">
-            <label for="repair1">Repair 1 Cost:</label>
-            <input type="number" id="repair1" name="repair1" required>
-            <br>
-            <label for="repair2">Repair 2 Cost:</label>
-            <input type="number" id="repair2" name="repair2" required>
-            <br>
-            <label for="maintenance1">Maintenance 1 Cost:</label>
-            <input type="number" id="maintenance1" name="maintenance1" required>
-            <br>
-            <label for="maintenance2">Maintenance 2 Cost:</label>
-            <input type="number" id="maintenance2" name="maintenance2" required>
-            <br>
-            <button onclick="calculateRMC()">Calculate Total Repair and Maintenance Costs</button>
-        
-            <div id="resultRMC"></div>
-        </div>
-        
-  
-
         </div>
       </div>
-  </div>
-</div>
 
+      <div class="w3-container w3-dark-grey w3-padding-32">
+        <div class="w3-row">
+          <div class="w3-container w3-twothird">
+            <h5 class="w3-bottombar w3-border-green">Demographic</h5>
+            <p>Language</p>
+            <p>Country</p>
+            <p>City</p>
+          </div>
+          <div class="w3-container w3-third">
+            <h5 class="w3-bottombar w3-border-red">System</h5>
+            <p>
+              <button onclick="redirectToValid()">
+                Show All Valid Addresses
+              </button>
+            </p>
 
-
-  <div class="w3-container w3-dark-grey w3-padding-32">
-    <div class="w3-row">
-      <div class="w3-container w3-twothird">
-        <h5 class="w3-bottombar w3-border-green">Demographic</h5>
-        <p>Language</p>
-        <p>Country</p>
-        <p>City</p>
+            <p>
+              <button onclick="redirectToInvalid()">
+                Show All Invalid Addresses
+              </button>
+            </p>
+          </div>
+        </div>
       </div>
-      <div class="w3-container w3-third">
-        <h5 class="w3-bottombar w3-border-red">System</h5>    
-        <p><button onclick="redirectToValid()">Show All Valid Addresses</button></p>
 
-        <p><button onclick="redirectToInvalid()">Show All Invalid Addresses</button></p>
-    
-      </div>
+      <script src="database.js"></script>
+      <!-- End page content -->
     </div>
-  </div>
 
-  <script src= "database.js"></script>
-  <!-- End page content -->
-</div>
-
-<script src= "embededImage.js"></script>
-<script src=" dashboard.js"> </script>
-<script >
-  function togglePaybackPeriod() {
-    const activeHistory = document.getElementById('Payback');
-    activeHistory.style.display = 'block';
-  }
-  
-</script>
-
-</body>
-
+    <script src="embededImage.js"></script>
+    <script src=" dashboard.js"></script>
+    <script src=" index.js"></script>
+  </body>
 </html>

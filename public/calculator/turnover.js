@@ -1,10 +1,10 @@
-function calculateTenantTurnover() {
+function calculateTenantTurnover(uniqueID) {
     // Get the values from the input fields
-    var totalUnits = document.getElementById('totalUnits').value;
-    var vacantUnits = document.getElementById('vacantUnits').value;
+    var totalUnits = document.getElementById('totalUnits-' + uniqueID).value;
+    var vacantUnits = document.getElementById('vacantUnits-' + uniqueID).value;
 
     // Ensure the values are numbers and not empty
-    if(isNaN(totalUnits) || isNaN(vacantUnits) || totalUnits == '' || vacantUnits == '') {
+    if (isNaN(totalUnits) || isNaN(vacantUnits) || totalUnits === '' || vacantUnits === '') {
         alert('Please enter valid numbers for both fields.');
         return;
     }
@@ -14,7 +14,7 @@ function calculateTenantTurnover() {
     vacantUnits = parseInt(vacantUnits, 10);
 
     // Check for a division by zero error
-    if(totalUnits == 0) {
+    if (totalUnits == 0) {
         alert('Total Units cannot be zero.');
         return;
     }
@@ -23,6 +23,6 @@ function calculateTenantTurnover() {
     var tenantTurnoverRate = (vacantUnits / totalUnits) * 100;
 
     // Display the result
-    var resultDiv = document.getElementById('resultTenantTurnover');
+    var resultDiv = document.getElementById('resultTenantTurnover-' + uniqueID);
     resultDiv.innerHTML = 'Tenant Turnover Rate: ' + tenantTurnoverRate.toFixed(2) + '%';
 }

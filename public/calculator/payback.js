@@ -7,15 +7,15 @@ function calculatePaybackPeriod(initialInvestment, annualCashInflow) {
     return paybackPeriod;
 }
 
-function calculateAndDisplayPaybackPeriod() {
-    const initialInvestment = parseFloat(document.getElementById('paybackInvestment').value);
-    const annualCashInflow = parseFloat(document.getElementById('annualCashInflow').value);
+function calculateAndDisplayPaybackPeriod(uniqueID) {
+    const initialInvestment = parseFloat(document.getElementById('paybackInvestment-' + uniqueID).value);
+    const annualCashInflow = parseFloat(document.getElementById('annualCashInflow-' + uniqueID).value);
 
     try {
         const paybackPeriod = calculatePaybackPeriod(initialInvestment, annualCashInflow);
-        document.getElementById('result').innerText = `Payback Period: ${paybackPeriod} years`;
+        document.getElementById('resultPayback-' + uniqueID).innerText = `Payback Period: ${paybackPeriod} years`;
     } catch (error) {
         console.error(error.message);
-        document.getElementById('result').innerText = error.message;
+        document.getElementById('resultPayback-' + uniqueID).innerText = error.message;
     }
 }

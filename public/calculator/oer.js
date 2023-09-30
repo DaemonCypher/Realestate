@@ -1,10 +1,10 @@
-function calculateOER() {
+function calculateOER(uniqueID) {
     // Get the values from the input fields
-    var operatingExpenses = document.getElementById('operatingExpenses').value;
-    var grossOperatingIncome = document.getElementById('grossOperatingIncome').value;
+    var operatingExpenses = document.getElementById('operatingExpenses-' + uniqueID).value;
+    var grossOperatingIncome = document.getElementById('grossOperatingIncome-' + uniqueID).value;
 
     // Ensure the values are numbers and not empty
-    if(isNaN(operatingExpenses) || isNaN(grossOperatingIncome) || operatingExpenses == '' || grossOperatingIncome == '') {
+    if(isNaN(operatingExpenses) || isNaN(grossOperatingIncome) || operatingExpenses === '' || grossOperatingIncome === '') {
         alert('Please enter valid numbers for both fields.');
         return;
     }
@@ -23,6 +23,6 @@ function calculateOER() {
     var oer = (operatingExpenses / grossOperatingIncome) * 100;
 
     // Display the result
-    var resultDiv = document.getElementById('resultOER');
+    var resultDiv = document.getElementById('resultOER-' + uniqueID);
     resultDiv.innerHTML = 'Operating Expense Ratio: ' + oer.toFixed(2) + '%';
 }

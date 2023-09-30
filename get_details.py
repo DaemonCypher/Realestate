@@ -1,9 +1,6 @@
 import datetime
 import traceback
-#TODO: there is a bug with client.search where there is no url to the address provided
 
-# seems to data can only be grabbed on address with the status
-#'Pending': 1904, 'Contingent': 448, 'Coming Soon': 45,'Relisted': 167, 'Under Contract': 15, 'N/A': 9, 'Under Contract - Continue to Show': 4
 async def get_details_closed_property(address,client):
     """
     Fetch details of a closed property based on its address.

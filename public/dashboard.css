@@ -1,0 +1,32 @@
+
+.grid-stack {
+  border: 8px solid #10be53;
+  width: 60vw; /* Set the width */
+  height: 80vh; /* Set the height */
+  margin: 0 auto; /* Center the border area */
+}
+
+.grid-stack-item-content.new-card {
+    background-color: #553077;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+        0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: box-shadow 0.3s;
+    border-radius: 10%; /* Optional: for rounded corners */
+}
+
+.grid-stack-item-content.new-card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2),
+        0 12px 24px 0 rgba(0, 0, 0, 0.19);
+}
+
+#delete-zone {
+  position: flex;
+  width: 175px;
+  height: 125px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #f44336; /* Red background for visibility */
+  border-radius: 10%; /* Optional: for rounded corners */
+  color: white;
+
+}
