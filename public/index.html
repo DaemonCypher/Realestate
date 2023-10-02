@@ -3,106 +3,49 @@
   <head>
     <title>Realestate Viewer</title>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Raleway"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link
-      href="https://unpkg.com/gridstack@4/dist/gridstack.min.css"
-      rel="stylesheet"
-    />
-
+    <link href="https://unpkg.com/gridstack@4/dist/gridstack.min.css" rel="stylesheet"/>
     <script src="https://unpkg.com/gridstack@4/dist/gridstack-h5.js"></script>
-
-  </head>
-      <link rel="stylesheet" href="index.css" />
+    <!-- Webpage CSS Code Sytle -->
+    <link rel="stylesheet" href="index.css" />
     <link rel="stylesheet" href="dashboard.css" />
+    <!-- End of Webpage CSS Code Sytle -->
+  </head>
 
   <body class="w3-light-grey">
     <!-- Top container -->
     <div class="w3-bar w3-top w3-black w3-large" style="z-index: 4">
-      <button
-        class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey"
-        onclick="w3_open();"
-      >
+      <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();">
         <i class="fa fa-bars"></i> Menu
       </button>
-      <span class="w3-bar-item w3-right"
-        ><img
-          src="home_icon.jpg"
-          alt="Description of Image"
-          style="width: 50px"
-      /></span>
+      <span class="w3-bar-item w3-right">
+        <img src="assets/home_icon.jpg" alt="Description of Image" style="width: 50px"/>
+      </span>
     </div>
 
-
     <!-- Sidebar/menu -->
-    <nav
-      class="w3-sidebar w3-collapse w3-white w3-animate-left"
-      style="z-index: 3; width: 300px"
-      id="mySidebar"
-    >
+    <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index: 3; width: 300px" id="mySidebar">
       <br />
       <div class="w3-container">
         <h5>Dashboard</h5>
         <hr />
       </div>
 
-      <div class="w3-bar w3-center centered-items">
-        <a
-          href="#"
-          class="w3-bar-item w3-button w3-padding"
-          onclick="show('AnnualResult')"
-        >
-          Annual Real Estate</a
-        >
-        <a
-          href="#"
-          class="w3-bar-item w3-button w3-padding"
-          onclick="show('QoQResult')"
-          >Quarterly Real Estate
-        </a>
-        <a
-          href="#"
-          class="w3-bar-item w3-button w3-padding"
-          onclick="show('HotRealEstate')"
-        >
-          Hottest Real Estate</a
-        >
-        <a
-          href="#"
-          class="w3-bar-item w3-button w3-padding"
-          onclick="show('GRM')"
-        >
-          Gross Rent Multiplier (GRM)</a
-        >
-        <a
-          href="#"
-          class="w3-bar-item w3-button w3-padding"
-          onclick="show('history')"
-          >Property Price History</a
-        >
-        <a
-          href="#"
-          class="w3-bar-item w3-button w3-padding"
-          onclick="show('realEstateInvestor')"
-          >Real Estate Investor</a
-        >
-        <a
-          href="#"
-          class="w3-bar-item w3-button w3-padding"
-          onclick="show('test')"
-          >Test</a
-        >
+      <div class="w3-col w3-center centered-items">
+        <a href="#" class="w3-col w3-button w3-padding" onclick="show('summary')"> Summary</a>
+        <a href="#" class="w3-col w3-button w3-padding" onclick="show('AnnualResult')"> Annual Real Estate</a>
+        <a href="#" class="w3-col w3-button w3-padding" onclick="show('QoQResult')">Quarterly Real Estate</a>
+        <a href="#" class="w3-col w3-button w3-padding" onclick="show('HotRealEstate')">Hottest Real Estate</a>
+        <a href="#" class="w3-col w3-button w3-padding" onclick="show('GRM')">Gross Rent Multiplier (GRM)</a>
+        <a href="#" class="w3-col w3-button w3-padding" onclick="show('history')">Sold Property Price History</a>
+        <a href="#" class="w3-col w3-button w3-padding" onclick="show('realEstateInvestor')">Real Estate Investor</a>
+        <a href="#" class="w3-col w3-button w3-padding" onclick="show('active')">Active Listing Price History</a>
+        <a href="#" class="w3-col w3-button w3-padding" onclick="show('search')">Property Search</a>
+        <a href="#" class="w3-col w3-button w3-padding" onclick="show('test')">Test</a>
       </div>
     </nav>
 
@@ -119,10 +62,67 @@
     <div class="w3-main" style="margin-left: 300px; margin-top: 43px">
       <!-- Header -->
       <header class="w3-container" style="padding-top: 22px"></header>
-
       <div class="w3-panel">
         <div class="w3-row-padding" style="margin: 0 -16px">
           <div class="w3-full">
+            <div id="summary" class="content">
+              <h1>
+                Summary on How to Use the Webapp
+              </h1>
+              <article>
+                <h2>Introduction</h2>
+                <p>This project is currently a working prototype for real estate investor to quickly narrow down potential investments. 
+                  The initial scope of this project is to initially grab download all addresses from the U.S. and create mulitple charts, graphs and maps.
+                  However, the amount of time and data to achieve this is beyond any personal computer(grabbing and storing all data from Connecticut is about 7 hours). 
+                  The project has shifted to outsource creating maps of the U.S. real estate market to other services, and only displaying charts and graphs of one state by the user.
+                  For instructions on how to changed the data of charts and graphs to another state refer to the <a href="https://github.com/DaemonCypher/Realestate">GitHub repo</a>.
+                  If some of the features listed below is not working or fully implmented then its most likely in progress to be developed and working.
+                </p>
+                <p>Tech Stack: Python3, Sqlite3, Node.js, Express.js</p>
+              </article>
+              <article>
+                <h2>Features</h2>
+                <h4>Machine Learning Price Prediction</h4>
+                <p>A features of this project is a machine learning model to predict future prices of properties. This feature works better with greater accuraccy on a larger data set.
+                  So if the initial collection of data by the user is limited to only 10,000 addresses. The accuraccy of the predictions will not be as great as a data set of 1 million addresses.
+                </p>
+                <h4>Investor Dashboard Tool</h4>
+                <p> The project also has an interactive investor dashboard that the user can create to however they want. To use this feature navigate to "Real Estate Investor" on the left hand side
+                  and click on the button "create a card". This will create a new card on the page that allows the user to select what tool they would want in the drop down menue. The user can also 
+                  change the color of the card to help differentiate similiar cards, name the card, resize the card, and drag drop where ever they want on the dashboard. 
+                  If the investor does not want the card any more they can drag the card to the trash can on the left hand side to delete it.
+                </p>
+                <h4>Comparing Price Trends</h4>
+                <p> Another tool is displaying the historic price history of a active listing property to the median and average historic price of properties in the same city.
+                  The user is also able to look at the price trend of sold properties as well.
+                </p>
+                <h4>Mass Property Filter</h4>
+                <p> The ability to narrow down the search of proerpties based on the property attributes such as number of beds, bath,sqft,etc.. 
+                </p>
+                <h4>Year over Year Analysis</h4>
+                <p> The ability to show which property is apperciating year over year at a given percentage.
+                </p>
+              </article>
+              <article>
+                <h2>DISCLAMER</h2>
+                <p>This webapp is a tool for educational purposes only. Nothing on the webapp should be construed as financial advice or a recommendation to buy or sell any sort of security or investment. 
+                  Consult with a professional financial adviser before making any financial decisions. 
+                  Investing in general is risky and has the potential for one to lose most or all of their initial investment.
+ 
+                </p>
+              </article>
+
+              <article>
+                <h2>About The Developer</h2>
+                <p>Hello! I am aspiring software engineer who has recently graduate from University of Minnesota Twin Cites with Bachelor's Degree in Computer Science.
+                  My experience is mainly focused on Python and the backend development side of things, but I have experience in Artificial Inteligence, Machine Learning, Full Stack Development,
+                  and Automation. The tools and languages I am famiular with are: Java, Python, C, C++, Ocaml, Shell Script, GraphQL, Kubernetes, Docker, Flask-RESTful/RESTx 
+                  , PostgresSQL, MongoDB, Excel, Grafana. To see more of my work and experience feel to look at my <a href="https://github.com/DaemonCypher">GitHub</a> 
+                  and <a href="https://www.linkedin.com/in/williamyangumn2023/">LinkedIn</a>.
+                </p>
+              </article>
+              
+            </div>
             <div id="AnnualResult" class="content">
               <iframe
                 title="Annual Real Estate Appreciation by County"
@@ -188,14 +188,10 @@
                 <canvas id="historyChart"></canvas>
               </div>
               <script src="sold.js"></script>
-              <form id="searchForm" onsubmit="return handleFormSubmit(event)">
-                <label for="query">Enter City to Search:</label>
-                <input type="text" id="query" name="query" />
-                <input
-                  type="button"
-                  value="Search"
-                  onclick="fetchDataForChart()"
-                />
+              <form id="soldSearchForm" onsubmit="return soldHandleFormSubmit(event)"> <!-- Changed id from searchForm to soldSearchForm for uniqueness -->
+                <label for="soldQuery">Enter City to Search:</label>
+                <input type="text" id="soldQuery" name="soldQuery"/>
+                <input type="button" value="Search" onclick="soldFetchDataForChart()"/>
               </form>
             </div>
 
@@ -207,18 +203,73 @@
             <script src="calculator/turnover.js"></script>
 
             <div id="realEstateInvestor" class="w3-row content">
-              <div id="delete-zone">
-                <i class="fa fa-trash-o" aria-hidden="true" style="font-size:40px"></i>
-                <p style="font-size:24px;line-height:1">Drag and Drop Here to Delete</p>
-              </div>
               <div class="w3-col centered-items" style="width: 150px">
                 <button onclick="createCard()">Create Card</button>
+                <div id="delete-zone" class="fa fa-trash-o" aria-hidden="true" style="font-size:40px"></div>
               </div>
-
               <div class="grid-stack"></div>
-
               <script src="https://unpkg.com/gridstack@4/dist/gridstack-h5.js"></script>
             </div>
+
+            <div id="active" class="content">
+              <div style="width: 75%; margin: auto">
+                <canvas id="activeChart"></canvas> <!-- Changed id from historyChart to activeChart -->
+              </div>
+              <script src="active.js"></script> <!-- Changed src from sold.js to active.js -->
+              <form id="activeSearchForm" onsubmit="return activeHandleFormSubmit(event)"> <!-- Changed id from searchForm to activeSearchForm for uniqueness -->
+                <label for="activeQuery">Enter City to Search:</label>
+                <input type="text" id="activeQuery" name="activeQuery"/>
+                <input type="button" value="Search" onclick="activeFetchDataForChart()"/>
+              </form>
+            </div>
+
+            <div id="search" class="content">
+              <form id="searchForm" action="/search" method="POST">
+                  <label for="query">Enter city:</label><br>
+                  <input type="text" id="query" name="query" required><br><br>
+                  <input type="submit" value="Submit">
+              </form>
+              <table id="resultTable">
+                  <!-- Table data will be populated here by JavaScript -->
+              </table>
+          </div>
+          
+          
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+          <script>
+              $(document).ready(function(){
+                  $('#searchForm').on('submit', function(e){
+                      e.preventDefault();
+                      $.post($(this).attr('action'), $(this).serialize(), function(data){
+                          let tableHeaders = Object.keys(data[0]);
+                          let tableHtml = '<tr>';
+                          tableHeaders.forEach(header => {
+                              tableHtml += `<th onclick="toggleColumn('${header}')">${header}</th>`;
+                          });
+                          tableHtml += '</tr>';
+                          data.forEach(row => {
+                              tableHtml += '<tr>';
+                              tableHeaders.forEach(header => {
+                                  tableHtml += `<td class="${header}">${row[header]}</td>`;
+                              });
+                              tableHtml += '</tr>';
+                          });
+                          $('#resultTable').html(tableHtml);
+                      });
+                  });
+              });
+          
+              function toggleColumn(column) {
+                  $(`.${column}`).toggle();
+              }
+          </script>
+
+          <div id="test" class="content">
+            <pre id="debug-output"></pre>
+            
+          </div>
+          
+
           </div>
         </div>
       </div>

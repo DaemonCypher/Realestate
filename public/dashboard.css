@@ -7,11 +7,11 @@
 }
 
 .grid-stack-item-content.new-card {
-    background-color: #553077;
+    background-color: #ffffff;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
         0 6px 20px 0 rgba(0, 0, 0, 0.19);
     transition: box-shadow 0.3s;
-    border-radius: 10%; /* Optional: for rounded corners */
+    border-radius: 5%; /* Optional: for rounded corners */
 }
 
 .grid-stack-item-content.new-card:hover {
@@ -20,13 +20,14 @@
 }
 
 #delete-zone {
-  position: flex;
-  width: 175px;
-  height: 125px;
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100px;
+  height: 100px;
   cursor: pointer;
   background-color: #f44336; /* Red background for visibility */
   border-radius: 10%; /* Optional: for rounded corners */
   color: white;
-
 }
+
