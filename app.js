@@ -68,6 +68,7 @@ app.post('/sold', (req, res) => {
         if (rows.length === 0){
             res.sendFile(__dirname + '/public/error.html')
         }else {
+            //console.log(rows);
             res.json(rows);
         }
     });
@@ -81,14 +82,15 @@ app.post('/active', (req, res) => {
 
     // Using the LIKE keyword with "%" wildcards to match any sequence of characters before or after the query.
     // The query checks for both "Sold (Public Records)" and "Sold (MLS)" statuses.
-    validDB.all(`SELECT * FROM validAddress WHERE city LIKE ? AND (status = "Price Changed" OR status = "Listed" OR status = "Active")`, [`%${query}%`], (err, rows) => {
+    validDB.all(`SELECT * FROM validAddress WHERE address LIKE ? AND (status = "Price Changed" OR status = "Listed" OR status = "Active")`, [`%${query}%`], (err, rows) => {
         if (err) {
             return res.status(400).json({"error": err.message});
         }
-
-        if (rows.length === 0){
-            res.sendFile(__dirname + '/public/error.html')
-        }else{
+    
+        if (rows.length === 0) {
+            res.sendFile(__dirname + '/public/error.html');
+        } else {
+            //console.log(rows);
             res.json(rows);
         }
     });
@@ -97,28 +99,38 @@ app.post('/active', (req, res) => {
 
 app.post('/search', (req, res) => {
     const query = req.body.query;
-
-    // Input validation
     if (!query) {
         return res.status(400).send("Invalid input");
     }
+    
 
-    // Specify the columns you want to include, excluding 'id' and 'history'
-    // possible columns to select "id,history,address, city, status, statusDate, dataDate"
-    const columns = "address, city, status"; 
+    // Specify the columns you want to include
+    const columns = `
+        address, city, history, 
+        CASE 
+            WHEN status IN ('Sold (Public Records)', 'Sold (MLS)', 'Sold', 'Listing Removed', 'Closed', 'Delisted')
+            THEN 'Sold'
+            WHEN status IN ('Price Changed', 'Listed', 'Active')
+            THEN 'Active'
+            ELSE status
+        END AS status
+    `; 
 
+    // Using the LIKE keyword with "%" wildcards to match any sequence of characters before or after the query.
     validDB.all(`SELECT ${columns} FROM validAddress WHERE city LIKE ?`, [`%${query}%`], (err, rows) => {
         if (err) {
             return res.status(400).json({"error": err.message});
         }
 
-        if (rows.length === 0){
+        if (rows.length === 0) {
             res.sendFile(__dirname + '/public/error.html')
         } else {
             res.json(rows);
         }
     });
 });
+
+
 
 //TODO
 app.post('/predictions', (req, res) => {

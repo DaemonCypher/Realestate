@@ -51,5 +51,5 @@ window.onload = function() {
   for (var i = 0; i < contents.length; i++) {
       contents[i].style.display = 'none';
   }
-  document.getElementById('QoQResult').style.display = 'block';
+  document.getElementById('summary').style.display = 'block';
 }

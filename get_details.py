@@ -33,21 +33,25 @@ async def get_details_closed_property(address,client):
         event = safe_get(mls_data_payload, 'propertyHistoryInfo', 'events', 0)
         timestamp_seconds = safe_get(event, 'eventDate', default=0) / 1000
         date_obj = datetime.datetime.fromtimestamp(timestamp_seconds)
-        
+        home_data =(safe_get(mls_data_payload,'payload','publicRecordsInfo','basicInfo'))
         return {
             'displayedPrice': event.get('price',-1),
             'history': history_payload.get('propertyTimeSeries', []),
             'status': event.get('eventDescription','N/A'),
-            'statusDate': date_obj
+            'statusDate': date_obj,
+            'bed': home_data.get('beds',-1),
+            'baths': home_data.get('baths',-1),
+            'yearBuilt': home_data.get('yearBuilt',-1),
+            'sqft': home_data.get('totalSqFt',-1)
         }
 
     except ValueError as e:  # For custom error messages
         #print(f"Error encountered: {e}")
-        return ""
+        return {}
     except Exception as e:   # For unexpected issues
         #print(f"Unexpected error encountered: {e}")
         #print(traceback.format_exc())
-        return ""
+        return {}
   
 async def get_details_opened_property(address,client):
     """
@@ -79,10 +83,14 @@ async def get_details_opened_property(address,client):
             raise ValueError(f"No listing ID found for URL: {url}")
         
         # Fetch property details using propertyId and listingId.
-        property_request= await client.above_the_fold(property_id,listing_id)
-        price = safe_get(property_request, 'payload', 'addressSectionInfo', 'latestPriceInfo', 'amount', default=-1)
-        status = safe_get(property_request, 'payload', 'addressSectionInfo', 'status', 'displayValue', default='N/A')
-        
+        property_request= await client.above_the_fold(property_id, listing_id)
+        data = safe_get(property_request, 'payload', 'addressSectionInfo')
+        price = safe_get(data, 'latestPriceInfo', 'amount', default=-1)
+        status = safe_get(data, 'status', 'displayValue', default='N/A')
+        sqft = safe_get(data,'sqFt','value', default=-1)
+        beds = safe_get(data,'beds', default=-1)
+        bath = safe_get(data,'baths', default=-1)
+        year_built = safe_get(data,'yearBuilt', default=-1)
         # Fetch property price history.
         price_history = await client.avm_historical(property_id, listing_id)
         status_date = safe_get(price_history, 'payload', 'avmUpdateDate', default=0) / 1000
@@ -93,16 +101,20 @@ async def get_details_opened_property(address,client):
             'displayedPrice': price,
             'history': history,
             'status': status,
-            'statusDate': date_obj
+            'statusDate': date_obj,
+            'bed': beds,
+            'baths': bath,
+            'yearBuilt': year_built,
+            'sqft': sqft
         }
 
     except ValueError as e:  # For custom error messages
         #print(f"Error encountered: {e}")
-        return ""
+        return {}
     except Exception as e:   # For unexpected issues
         #print(f"Unexpected error encountered: {e}")
         #print(traceback.format_exc())
-        return ""
+        return {}
     
 def safe_get(data, *keys, default=None):
     """
@@ -151,4 +163,4 @@ async def get_details(address, client):
         return close_property
     
 
-    return ""
+    return {}

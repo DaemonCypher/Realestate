@@ -35,21 +35,22 @@ function activeGetMonthLabel(date) {
     return monthNames[date.getMonth()] + ' ' + date.getFullYear();
 }
 
-function activeProcessForChart(dataArray, userInput) {
-    let labelString = `${userInput} Average Property Value`;
-    console.log(userInput)
-    const allHistories = dataArray.map(entry => JSON.parse(entry.history));
+function activeProcessForChart(cityData, userInput, userPropertyHistory) {
+    const cityName = cityData[0].city;
+    const allHistories = cityData.map(entry => JSON.parse(entry.history));
 
-    const mostFrequentHistoryLength = activeGetMostFrequentLength(allHistories);  // Updated function name
-
+    const mostFrequentHistoryLength = activeGetMostFrequentLength(allHistories);  
     const matchingHistories = allHistories.filter(history => history.length === mostFrequentHistoryLength);
 
-    const endDate = new Date(dataArray[0].dataDate);
+    const propertyData = Array.from({ length: mostFrequentHistoryLength }).map((_, index) => {
+        return userPropertyHistory[index] || 0;
+    });
 
+    const endDate = new Date(cityData[0].dataDate);
     const labels = Array.from({ length: mostFrequentHistoryLength }).map((_, index) => {
         const dateToUse = new Date(endDate);
         dateToUse.setMonth(dateToUse.getMonth() - index);
-        return activeGetMonthLabel(dateToUse);  // Updated function name
+        return activeGetMonthLabel(dateToUse);  
     }).reverse();
 
     const averageData = Array.from({ length: mostFrequentHistoryLength }).map((_, index) => {
@@ -60,23 +61,31 @@ function activeProcessForChart(dataArray, userInput) {
 
     const medianData = Array.from({ length: mostFrequentHistoryLength }).map((_, index) => {
         const valuesAtCurrentIndex = matchingHistories.map(history => history[index] || 0);
-        return activeGetMedian(valuesAtCurrentIndex);  // Updated function name
+        return activeGetMedian(valuesAtCurrentIndex);  
     });
 
     return {
         labels: labels,
-        datasets: [{
-            label: labelString,
-            borderColor: '#4e19e0',
-            backgroundColor: 'rgba(0, 0, 0, 0)',
-            data: averageData
-        },
-        {
-            label: `${userInput} Median Property Value`,
-            borderColor: '#ff6347',
-            backgroundColor: 'rgba(0, 0, 0, 0)', // transparent
-            data: medianData
-        }]
+        datasets: [
+            {
+                label: `${cityName} Median Property Value`,
+                borderColor: '#4e19e0',
+                backgroundColor: 'rgba(0, 0, 0, 0)',
+                data: averageData
+            },
+            {
+                label: `${cityName} Median Property Value`,
+                borderColor: '#ff6347',
+                backgroundColor: 'rgba(0, 0, 0, 0)', 
+                data: medianData
+            },
+            {
+                label: `${userInput} Property Price History`,
+                borderColor: '#00aaff',
+                backgroundColor: 'rgba(0, 170, 255, 0.1)', 
+                data: propertyData
+            }
+        ]
     };
 }
 
@@ -105,56 +114,66 @@ function activeRenderChart(data) {
 
 function activeHandleFormSubmit(event) {
     event.preventDefault();
-    activeFetchDataForChart();  // Updated the function name here too
+    activeFetchDataForChart();  
     return false;
 }
-let activeLineChart;  // Declare the chart variable outside the functions.
+
+let activeLineChart; 
 
 function activeFetchDataForChart() {
-    let userInput = document.getElementById("activeQuery").value.trim();
-    const query = document.getElementById("activeQuery").value;
-    if (!query) {
+    const userInput = document.getElementById("activeQuery").value.trim();
+
+    if (!userInput) {
         alert("Please enter a city to search.");
         return;
     }
-    console.log(query)
 
+    // First, fetch data for the specific address inputted by the user
     fetch('/active', {  
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ query: query })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query: userInput })
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Network response was not ok ' + response.statusText);
+            throw new Error('Error fetching from /active: ' + response.statusText);
         }
         return response.json();
     })
     .then(data => {
-        // Filter out entries with empty lists '[]'
-        const filteredData = data.filter(entry => JSON.parse(entry.history).length !== 0);
-    
-        // Output data to page
-        outputDataToPage(filteredData);  // <-- Add this line
-    
-        if (filteredData.length === 0) {
-            window.location.href = "noData.html";
-            return;
-        }
-    
-        const chartData = activeProcessForChart(filteredData, userInput);
+        const city = data[0].city;
+        const userPropertyHistory = JSON.parse(data[0].history || '[]');
+
+        // Now, fetch data for the entire city
+        return fetch('/sold', {  
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: city })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Error fetching from /sold: ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(cityData => {
+            return [cityData, userPropertyHistory];
+        });
+    })
+    .then(results => {
+        const cityData = results[0];
+        const userPropertyHistory = results[1];
+        const chartData = activeProcessForChart(cityData, userInput, userPropertyHistory);
+
         if (activeLineChart) {
             activeLineChart.destroy();
         }
         activeLineChart = activeRenderChart(chartData);
     })
-    
     .catch(error => {
-        console.error('Error fetching data:', error);
-        window.location.href = "error.html";
-        return;
+        console.error('Error:', error);
+        const outputElement = document.getElementById('debug-output');
+        outputElement.textContent = JSON.stringify({ errorMessage: error.message }, null, 2);
     });
 }
 

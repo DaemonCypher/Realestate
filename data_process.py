@@ -40,7 +40,7 @@ async def process_feature(feature, client):
 
     # Retrieve address details
     data = await get_details(address, client)
-    if not data or data == "":
+    if not data or data == {}:
         return (address, None)
 
     # Extract history, status, and relevant dates
@@ -50,9 +50,23 @@ async def process_feature(feature, client):
     status = data.get('status')
     status_date = data.get('statusDate')
     data_date = datetime.datetime.now()
+    bed = data.get('bed')
+    baths = data.get('baths')
+    year_built = data.get('yearBuilt')
+    sqft = data.get('sqft')
     
     # Return processed data in desired format
-    return (address, {'address': address, 'city': props.get('city', 'N/A'), 'history': history_str, 'status': status, "statusDate": status_date, 'dataDate': data_date})
+    return (address, {
+        'address': address, 
+        'city': props.get('city', 'N/A'), 
+        'history': history_str, 
+        'status': status, 
+        'statusDate': status_date, 
+        'dataDate': data_date, 
+        'beds': bed, 
+        'baths': baths,
+        'yearBuilt': year_built, 
+        'sqft':sqft})
 
 async def process_geojson_data(geojson_file_path, valid_conn, invalid_conn, semaphore, client, size, batch_size=50):
     """
@@ -100,9 +114,18 @@ async def process_geojson_data(geojson_file_path, valid_conn, invalid_conn, sema
     for future in tqdm(asyncio.as_completed(tasks), total=len(tasks), desc='Processing addresses'):
         address, result_data = await future
         if result_data:
-            valid_data_to_insert.append((result_data['address'], result_data['city'], result_data['history'], result_data['status'], result_data['statusDate'], result_data['dataDate']))
+            valid_data_to_insert.append((result_data['address'], 
+                                         result_data['city'], 
+                                         result_data['history'], 
+                                         result_data['status'], 
+                                         result_data['statusDate'], 
+                                         result_data['dataDate'], 
+                                         result_data['beds'], 
+                                         result_data['baths'], 
+                                         result_data['yearBuilt'], 
+                                         result_data['sqft']))
         else:
-            invalid_data_to_insert.append((address, 'N/A', '[]', 'N/A', 'N/A', 'N/A'))
+            invalid_data_to_insert.append((address, 'N/A', '[]', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A', 'N/A'))
           
     # Write the processed data to the database
     batch_write_to_db(valid_conn, 'validAddress', valid_data_to_insert)
