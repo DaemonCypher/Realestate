@@ -56,7 +56,8 @@ npm run start
 ![](https://github.com/DaemonCypher/Realestate/blob/main/demo.gif)
 
 # To be implemented
-* Hosting the code at vercel with a demo database to grab property data
+* Add assets from Figma
+* Hosting the code at Vercel with a demo database to grab property data
 * Containarize code
 * Add feature for process_geojson_data() to write in batches while collecting data instead of after
 * Machine learning price prediction
