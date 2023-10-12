@@ -39,10 +39,10 @@ depending on the state this will take a while. A 100,000 address takes about 42 
 ```
 python3 setup.py -i 1000 -n ct -f
 ```
--i flag for how many address to be proccess(Required).
+-i flag for how many address to be proccess(Required). The value after is the number of addresses to be processed.
 
 
--n flag for the state to be proccess(Required).
+-n flag for the state to be proccess(Required). The value after is the state name abbreviation of addresses to be processed.
 
 
 -f flag to convert the file and remove unnecessary addresses. Only need to use the flag once for the first run of a new state(Optional).
