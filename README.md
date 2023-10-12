@@ -23,7 +23,7 @@ Tech Stack: Python3, SQLite3, Node.js, Express.js
   
 # Install libraries
 ```
-npm install express sqlite3 body-parser child_process gridstack
+npm install express sqlite3 body-parser child_process gridstack  tablefilter
 ```
 ```
 pip install requests aiohttp geopandas tqdm pandas numpy tensorflow scikit-learn
@@ -56,9 +56,8 @@ npm run start
 ![](https://github.com/DaemonCypher/Realestate/blob/main/demo.gif)
 
 # To be implemented
-* Hosting the code at vercel with a demo database to grab property data
+* Add assets from Figma
+* Hosting the code at Vercel with a demo database to grab property data
 * Containarize code
-* Add realtor metrics/dashboards
-* Add extra details on properties (beds,bath,sqft,etc...)
 * Add feature for process_geojson_data() to write in batches while collecting data instead of after
 * Machine learning price prediction
