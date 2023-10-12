@@ -49,7 +49,7 @@ def fetch_from_db(conn, table_name):
         id, address, city, history_str, status, status_date, data_date, beds, baths, year_built, sqft = row
         # Deserialize the history field
         history = json.loads(history_str)
-        deserialized_results.append((id, address, city, history_str, status, status_date, data_date, beds, baths, year_built, sqft))
+        deserialized_results.append((id, address, city, history, status, status_date, data_date, beds, baths, year_built, sqft))
     return deserialized_results
 
 def add_column_to_table(conn, table_name, column_name, column_type):
@@ -168,3 +168,28 @@ def addresses_in_db(conn, table_name, addresses):
     placeholders = ', '.join(['?'] * len(addresses))
     cursor.execute(f"SELECT address FROM {table_name} WHERE address IN ({placeholders})", addresses)
     return set(item[0] for item in cursor.fetchall())
+
+def fetch_city_from_db(conn,table_name,city):
+    """
+    Fetch records from a specified table in the database based on the city name.
+
+    Parameters:
+    - conn (sqlite3.Connection): The SQLite database connection object.
+    - table_name (str): The name of the table from which to fetch the records.
+    - city (str): The name of the city for which to fetch the records.
+
+    Returns:
+    - list[tuple]: A list of tuples where each tuple represents a record from the database.
+                   The history field in each tuple is deserialized from a JSON string to a Python dictionary.
+    """
+    cursor = conn.cursor()
+    param = (f"%{city}%",)
+    cursor.execute(f"SELECT * FROM {table_name} WHERE city LIKE ?", param)
+    results = cursor.fetchall()
+    deserialized_results = []
+    for row in results:
+        id, address, city, history_str, status, status_date, data_date, beds, baths, year_built, sqft = row
+        # Deserialize the history field
+        history = json.loads(history_str)
+        deserialized_results.append((id, address, city, history, status, status_date, data_date, beds, baths, year_built, sqft))
+    return deserialized_results

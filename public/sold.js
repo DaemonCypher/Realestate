@@ -1,7 +1,13 @@
+/**
+ * Get the median of an array.
+ * @param {Array} arr - The array of numbers.
+ * @returns {Number} - The median of the array.
+ */
 function soldGetMedian(arr) {
     const sorted = arr.slice().sort((a, b) => a - b);
     const middle = Math.floor(sorted.length / 2);
 
+    // If the length is even, return the average of the two middle numbers.
     if (sorted.length % 2 === 0) {
         return (sorted[middle - 1] + sorted[middle]) / 2;
     } else {
@@ -9,6 +15,11 @@ function soldGetMedian(arr) {
     }
 }
 
+/**
+ * Get the most frequent length from a list of histories.
+ * @param {Array} histories - The list of history arrays.
+ * @returns {Number} - The most frequent length.
+ */
 function soldGetMostFrequentLength(histories) {
     const frequency = {};
 
@@ -30,18 +41,29 @@ function soldGetMostFrequentLength(histories) {
     return mostFrequentLength;
 }
 
+/**
+ * Get the label for a given date in "Month Year" format.
+ * @param {Date} date - The date object.
+ * @returns {String} - The formatted date string.
+ */
 function soldGetMonthLabel(date) {
-    const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-    return monthNames[date.getMonth()] + ' ' + date.getFullYear();
+    const monthNames = ["January", "February", "March", "April", "May", "June",
+                        "July", "August", "September", "October", "November", "December"];
+    return `${monthNames[date.getMonth()]} ${date.getFullYear()}`;
 }
 
-function soldProcessForChart(dataArray,userInput) {
+/**
+ * Process the provided data array for chart rendering.
+ * @param {Array} dataArray - The data for chart processing.
+ * @param {String} userInput - The user input string for label purposes.
+ * @returns {Object} - The processed chart data.
+ */
+function soldProcessForChart(dataArray, userInput) {
     let labelString = `${userInput} Average Property Value`;
-    console.log(dataArray);
-    
+
     const allHistories = dataArray.map(entry => JSON.parse(entry.history));
 
-    const mostFrequentHistoryLength = soldGetMostFrequentLength(allHistories);  // Updated function name
+    const mostFrequentHistoryLength = soldGetMostFrequentLength(allHistories);
 
     const matchingHistories = allHistories.filter(history => history.length === mostFrequentHistoryLength);
 
@@ -50,18 +72,20 @@ function soldProcessForChart(dataArray,userInput) {
     const labels = Array.from({ length: mostFrequentHistoryLength }).map((_, index) => {
         const dateToUse = new Date(endDate);
         dateToUse.setMonth(dateToUse.getMonth() - index);
-        return soldGetMonthLabel(dateToUse);  // Updated function name
+        return soldGetMonthLabel(dateToUse);
     }).reverse();
 
+    // Calculate average data for the chart.
     const averageData = Array.from({ length: mostFrequentHistoryLength }).map((_, index) => {
         const valuesAtCurrentIndex = matchingHistories.map(history => history[index] || 0);
         const sum = valuesAtCurrentIndex.reduce((acc, value) => acc + value, 0);
         return sum / valuesAtCurrentIndex.length;
     });
 
+    // Calculate median data for the chart.
     const medianData = Array.from({ length: mostFrequentHistoryLength }).map((_, index) => {
         const valuesAtCurrentIndex = matchingHistories.map(history => history[index] || 0);
-        return soldGetMedian(valuesAtCurrentIndex);  // Updated function name
+        return soldGetMedian(valuesAtCurrentIndex);
     });
 
     return {
@@ -81,6 +105,11 @@ function soldProcessForChart(dataArray,userInput) {
     };
 }
 
+/**
+ * Render the chart with the given data.
+ * @param {Object} data - The data to use for the chart.
+ * @returns {Object} - The Chart object.
+ */
 function soldRenderChart(data) {
     const config = {
         type: 'line',
@@ -104,14 +133,22 @@ function soldRenderChart(data) {
     );
 }
 
+/**
+ * Handle the form submission, fetching data for the chart.
+ * @param {Event} event - The form submission event.
+ * @returns {Boolean} - Always returns false to prevent form submission.
+ */
 function soldHandleFormSubmit(event) {
-    event.preventDefault(); // Prevent the default form submission behavior
-    soldFetchDataForChart();   // Call the function to fetch data for the chart
-    return false;          // Prevent the form from submitting
-  }
-  
-let soldLineChart;  // Declare the chart variable outside the functions.
+    event.preventDefault();  // Prevent default form submission behavior.
+    soldFetchDataForChart(); // Fetch data for the chart.
+    return false;            // Prevent the form from submitting.
+}
 
+let soldLineChart;  // Declare the chart variable outside the functions for scope reasons.
+
+/**
+ * Fetch the data for the chart based on user input.
+ */
 function soldFetchDataForChart() {
     let userInput = document.getElementById("soldQuery").value.trim();
     const query = document.getElementById("soldQuery").value;
@@ -119,7 +156,6 @@ function soldFetchDataForChart() {
         alert("Please enter a city to search.");
         return;
     }
-    console.log(query)
 
     fetch('/sold', {
         method: 'POST',
@@ -130,23 +166,19 @@ function soldFetchDataForChart() {
     })
     .then(response => response.json())
     .then(data => {
-        if (data.length === 0 || !Array.isArray(data)) {  // Check if data is empty or not an array
-            window.location.href = "noData.html";  // Redirect to no-data.html if data is empty
+        if (data.length === 0 || !Array.isArray(data)) {  // Check if data is empty or not an array.
+            window.location.href = "noData.html";        // Redirect if data is empty.
             return;
         }
-        const chartData = soldProcessForChart(data, userInput);  // Updated function name
-        // If the chart instance already exists, destroy it.
+        const chartData = soldProcessForChart(data, userInput);  // Process data for the chart.
         if (soldLineChart) {
-            soldLineChart.destroy();
+            soldLineChart.destroy();  // Destroy existing chart instance if it exists.
         }
-
-        // Render a new chart.
-        soldLineChart = soldRenderChart(chartData);  // Updated function name
+        // Render the chart.
+        soldLineChart = soldRenderChart(chartData);
     })
     .catch(error => {
         console.error('Error fetching data:', error);
-        //alert("An error occurred. Please try again.");
-        window.location.href = "error.html";
-        return;
+        window.location.href = "error.html";  // Redirect to error page on fetch error.
     });
 }

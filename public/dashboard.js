@@ -1,31 +1,33 @@
+/**
+ * Displays the appropriate calculator section based on the given option.
+ * @param {string} option - The calculator section to be displayed.
+ */
 function showCalculator(option) {
   var sections = [
-    "Payback",
-    "ROI",
-    "TenantTurnover",
-    "RentPerProperty",
-    "OER",
-    "RMC",
+      "Payback",
+      "ROI",
+      "TenantTurnover",
+      "RentPerProperty",
+      "OER",
+      "RMC",
   ];
-  sections.forEach(function (section) {
-    var elem = document.getElementById(section);
-    if (section === option) {
-      elem.style.display = "block";
-    } else {
-      elem.style.display = "none";
-    }
+  
+  sections.forEach(function(section) {
+      var elem = document.getElementById(section);
+      elem.style.display = (section === option) ? "block" : "none";
   });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+  // Initializes the GridStack.
   var grid = GridStack.init({
-    acceptWidgets: ".grid-stack",
-    removable: "#delete-zone",
-    removeTimeout: 100,
+      acceptWidgets: ".grid-stack",
+      removable: "#delete-zone",
+      removeTimeout: 100,
   });
 
-  grid.on("removed", function (event, items) {
-    console.log("Removed ", items.length, " items");
+  grid.on("removed", function(event, items) {
+      console.log("Removed ", items.length, " items");
   });
 
   window.createCard = function () {
@@ -55,14 +57,24 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   };
 
-  window.changeCardColor = function (cardID, colorValue) {
-    console.log("changeCardColor called with", cardID, colorValue);
-    const cardElement = document.getElementById(cardID);
-    cardElement.style.backgroundColor = colorValue;
+    /**
+     * Changes the background color of a card.
+     * @param {string} cardID - The ID of the card element.
+     * @param {string} colorValue - The color value to be set.
+     */
+    window.changeCardColor = function(cardID, colorValue) {
+      const cardElement = document.getElementById(cardID);
+      cardElement.style.backgroundColor = colorValue;
   };
-
-  window.showContent = function (selectedOption, uniqueID) {
-    var contentContainer = document.getElementById(uniqueID);
+    /**
+     * Shows content based on selected calculator option for a specific card.
+     * @param {string} selectedOption - The selected calculator option.
+     * @param {string} uniqueID - The unique identifier for the content container of a card.
+     */
+    window.showContent = function(selectedOption, uniqueID) {
+      var contentContainer = document.getElementById(uniqueID);
+      
+      // Switch case or if-else chain can be used to update contentContainer's innerHTML based on the selectedOption.
     if (selectedOption === "Payback") {
       contentContainer.innerHTML = `
         <div id="Payback-${uniqueID}" class="content">
