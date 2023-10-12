@@ -1,10 +1,10 @@
 # Real Estate Heat Map /Historic Price Trend Indicator.
 
-This is an individual project for nation wide heat map of the U.S. by county, and can be viewed downed to the city for more accurate representation showing a historic price trend on a city level. 
+This is an individual project for nation wide heat map of the U.S. by county, and can be viewed downed to the city for more accurate representation and details on a city level. 
 
 
 Currently a working progress. Main issue is the amount of data to be process (CT alone has 1015948 known addresses)
-,and as of right now after modifying Redfin unofficial api (https://pypi.org/project/redfin/) and running the code in parallel give us about 40 address computed per second. 
+,and as of right now after modifying Redfin unofficial api (https://pypi.org/project/redfin/) and running the code in parallel give us about 40-60 address computed per second. 
 This is after removing several duplicate addresses and addresses that are likely to be apartments.
 Without a backing of an organization to use Zillow API for faster request time or more request it is feasibly impossible to run the code alone on a personal computer for a nation wide scale.
 
@@ -55,9 +55,16 @@ npm run start
 ```
 ![](https://github.com/DaemonCypher/Realestate/blob/main/demo.gif)
 
+# Price Prediction
+It is recommended that you have collected all the addresses from setup.py before executing the code below as the model will perform better with more data.
+```
+python3 ml_setup.py [city_name]
+```
+Replace [city_name] with a name of a city from the data you have collected.
 # To be implemented
 * Add assets from Figma
 * Hosting the code at Vercel with a demo database to grab property data
 * Containarize code
 * Add feature for process_geojson_data() to write in batches while collecting data instead of after
 * Machine learning price prediction
+* Update demo
