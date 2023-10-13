@@ -53,13 +53,14 @@ Will start the webpage with all the data collected and display the chart.
 ```
 npm run start
 ```
-![](https://github.com/DaemonCypher/Realestate/blob/main/demo.gif)
+![](https://github.com/DaemonCypher/Realestate/blob/main/Demo.gif)
 
 # Price Prediction
 It is recommended that you have collected all the addresses from setup.py before executing the code below as the model will perform better with more data.
 ```
 python3 ml_setup.py [city_name]
 ```
+![](https://github.com/DaemonCypher/Realestate/blob/main/Demo-ML.gif)
 Replace [city_name] with a name of a city from the data you have collected.
 # To be implemented
 * Add assets and restructure webpage from/with Figma
