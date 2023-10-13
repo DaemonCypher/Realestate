@@ -62,9 +62,9 @@ python3 ml_setup.py [city_name]
 ```
 Replace [city_name] with a name of a city from the data you have collected.
 # To be implemented
-* Add assets from Figma
+* Add assets and restructure webpage from/with Figma
 * Hosting the code at Vercel with a demo database to grab property data
 * Containarize code
 * Add feature for process_geojson_data() to write in batches while collecting data instead of after
-* Machine learning price prediction
+* Connect front end to back end machine learning price prediction
 * Update demo
