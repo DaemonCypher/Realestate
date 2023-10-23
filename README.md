@@ -20,7 +20,8 @@ Tech Stack: Python3, SQLite3, Node.js, Express.js
 * some kind of Zip file unpacker
 * Npm
 * Pip
-  
+
+Everything should be installed in an Anaconda env.
 # Install libraries
 ```
 npm install express sqlite3 body-parser child_process gridstack  tablefilter
@@ -68,4 +69,6 @@ Replace [city_name] with a name of a city from the data you have collected.
 * Containarize code
 * Add feature for process_geojson_data() to write in batches while collecting data instead of after
 * Connect front end to back end machine learning price prediction
-* Update demo
+* Remove unnecessary libraries
+* Create enviroment file
+* Testing modules
