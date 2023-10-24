@@ -68,7 +68,6 @@ app.post('/sold', (req, res) => {
         if (rows.length === 0){
             res.sendFile(__dirname + '/public/error.html')
         }else {
-            console.log('sold')
             res.json(rows);
         }
     });
