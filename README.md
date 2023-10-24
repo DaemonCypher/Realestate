@@ -27,7 +27,7 @@ Everything should be installed in an Anaconda env.
 npm install express sqlite3 body-parser child_process gridstack  tablefilter
 ```
 ```
-pip install requests aiohttp geopandas tqdm pandas numpy tensorflow scikit-learn
+pip install requests aiohttp tqdm pandas numpy tensorflow scikit-learn
 ```
 
 # Intial Setup
@@ -69,6 +69,5 @@ Replace [city_name] with a name of a city from the data you have collected.
 * Containarize code
 * Add feature for process_geojson_data() to write in batches while collecting data instead of after
 * Connect front end to back end machine learning price prediction
-* Remove unnecessary libraries
 * Create enviroment file
 * Testing modules
