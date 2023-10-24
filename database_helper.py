@@ -193,3 +193,27 @@ def fetch_city_from_db(conn,table_name,city):
         history = json.loads(history_str)
         deserialized_results.append((id, address, city, history, status, status_date, data_date, beds, baths, year_built, sqft))
     return deserialized_results
+
+
+def fetch_all_cities_from_db(conn, table_name):
+    """
+    Fetch records from a specified table in the database for all cities.
+
+    Parameters:
+    - conn (sqlite3.Connection): The SQLite database connection object.
+    - table_name (str): The name of the table from which to fetch the records.
+
+    Returns:
+    - list[tuple]: A list of tuples where each tuple represents a record from the database.
+                   The history field in each tuple is deserialized from a JSON string to a Python dictionary.
+    """
+    cursor = conn.cursor()
+    cursor.execute(f"SELECT * FROM {table_name}")
+    results = cursor.fetchall()
+    deserialized_results = []
+    for row in results:
+        id, address, city, history_str, status, status_date, data_date, beds, baths, year_built, sqft = row
+        # Deserialize the history field
+        history = json.loads(history_str)
+        deserialized_results.append((id, address, city, history, status, status_date, data_date, beds, baths, year_built, sqft))
+    return deserialized_results

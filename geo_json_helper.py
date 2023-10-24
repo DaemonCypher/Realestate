@@ -1,5 +1,44 @@
 import os
 import json
+import glob
+
+def is_valid_format(line):
+    """Checks if a line conforms to the specified JSON format."""
+    try:
+        entry = json.loads(line)
+    except json.JSONDecodeError:
+        return False
+
+    # Check top-level keys
+    if set(entry.keys()) != {"type", "properties", "geometry"}:
+        return False
+    
+    # Check properties keys
+    if set(entry["properties"].keys()) != {"hash", "number", "street", "unit", "city", "district", "region", "postcode", "id"}:
+        return False
+    
+    # Check geometry keys
+    if set(entry["geometry"].keys()) != {"type", "coordinates"}:
+        return False
+    
+    return True
+
+def merge_files(dirpath, output_file_path):
+    """
+    Merges content from multiple .geojson files into a single file within a specified directory.
+
+    Parameters:
+    dirpath (str): Path of the directory containing .geojson files to merge.
+    output_file_path (str): Path of the file to write merged content to.
+    """
+    # Get all .geojson files in the specified directory
+    file_paths = glob.glob(os.path.join(dirpath, '*.geojson'))
+    with open(output_file_path, 'w') as output_file:
+        for file_path in file_paths:
+            with open(file_path, 'r') as input_file:
+                for line in input_file:
+                    if is_valid_format(line):
+                        output_file.write(line)
 
 def delete_unwanted_files(path):
     """
@@ -9,15 +48,18 @@ def delete_unwanted_files(path):
     to create the desired one.
     """
     
-    # Flag to check if the desired file exists in the current directory
-    has_statewide_file = False
-    
     # Walking through the directory tree rooted at path
     for dirpath, dirnames, filenames in os.walk(path):
+        
+        # If the desired file doesn't exist, it suggests merging other files.
+        if "statewide-addresses-state.geojson" not in filenames:
+            print(f"No 'statewide-addresses-state.geojson' in {dirpath}. Merging other files.")
+            output_file_path = os.path.join(dirpath, 'statewide-addresses-state.geojson')
+            merge_files(dirpath, output_file_path)
+        
+        # Iterate through the files and delete those that are not the desired file
         for filename in filenames:
-            if filename == "statewide-addresses-state.geojson":
-                has_statewide_file = True
-            else:
+            if filename != "statewide-addresses-state.geojson":
                 # Delete the file if it's not the desired file
                 file_to_delete = os.path.join(dirpath, filename)
                 try:
@@ -25,15 +67,7 @@ def delete_unwanted_files(path):
                     print(f"Deleted: {file_to_delete}")
                 except Exception as e:
                     print(f"Error deleting {file_to_delete}. Error: {e}")
-        
-        # If the desired file doesn't exist, it suggests merging other files.
-        # Currently just deletes all files in the folder if it does not have statewide-addresses-state.geojson
-        if not has_statewide_file:
-            print(f"No 'statewide-addresses-state.geojson' in {dirpath}. Consider merging other files.")
-        
-        # Reset the flag for the next directory
-        has_statewide_file = False  
-              
+           
 def deleter():
     """
     Deletes unwanted files in the 'downloads' folder.
@@ -136,7 +170,11 @@ def remove_duplicates(state):
 
     with open(path, 'r') as f:
         for line in f.readlines():
-            entry = json.loads(line)
+            try:
+                entry = json.loads(line)
+            except json.JSONDecodeError as e:
+                print(f"Failed to decode JSON on line: {line}. Error: {e}")
+                continue  # Skip to the next line
             
             # Skip entries that don't meet the validation criteria
             if not is_valid(entry):

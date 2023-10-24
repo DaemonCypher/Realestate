@@ -66,7 +66,7 @@ def setup():
     valid_conn.close()
     invalid_conn.close()
 
-
 if __name__ == "__main__":
     # Execute the setup function when this script is run directly
+    
     setup()

@@ -34,7 +34,7 @@ def prepare_data(city):
     
     return data
 
-def train_model(data,city):
+def train_model_CNN(data,city):
     """Train a 1D CNN model on the provided data and return evaluation metrics and predictions."""
     
     # Extract addresses and prepare data
@@ -72,3 +72,57 @@ def train_model(data,city):
     })
     #model.save(f"saved_model/{city}-model")
     return mae, r2, predicted_prices_df
+
+
+def train_model_LSTM(data,city):
+    
+    # cnn for city and lstm for state wide 
+    """Train a LSTM model on the provided data and return evaluation metrics and predictions."""
+    
+        # Extract addresses and prepare data
+    addresses = data['Address']
+    data = data.drop(columns=['Address'])
+    X = data.values[:, :-1]  # All but the last month
+    y = data.values[:, -1]  # Last month
+
+    X = X.reshape((X.shape[0], X.shape[1], 1))
+    max_months = data.shape[1] - 1  # Subtract 1 to exclude the target column
+
+    # Split the data into training and testing sets
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+    # Build the LSTM model
+    model = tf.keras.models.Sequential([
+        tf.keras.layers.LSTM(max_months//2, activation='relu', input_shape=(X_train.shape[1], X_train.shape[2])),
+        tf.keras.layers.Dense(max_months//4, activation='relu'),
+        tf.keras.layers.Dense(1)  # Linear activation for regression
+    ])
+
+    # Compile the model
+    model.compile(optimizer='adam', loss='mse', metrics=['mae'])
+
+    # Train the model
+    model.fit(X_train, y_train, epochs=20, batch_size=64, validation_data=(X_test, y_test))
+    
+    # Evaluate and predict
+    loss, mae = model.evaluate(X_test, y_test, verbose=0)
+    y_pred = model.predict(X_test)
+    r2 = r2_score(y_test, y_pred)
+    predicted_next_month_prices = model.predict(X)
+    
+    # Prepare results
+    predicted_prices_df = pd.DataFrame({
+        'Address': addresses,
+        'Predicted_Next_Month_Price': predicted_next_month_prices.flatten()
+    })
+    #model.save(f"saved_model/{city}-model")
+    return mae, r2, predicted_prices_df
+
+
+def train_model(data,city):
+    if city == None or city =="":
+        train_model_LSTM(data,city)
+    elif city != None or city !="":
+        train_model_CNN(data,city)
+    else:
+        return None
