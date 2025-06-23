@@ -1,3 +1,7 @@
+# Depreciated
+
+Project is no longer able to grab home data from Redfin.
+
 # Real Estate Heat Map /Historic Price Trend Indicator.
 
 This is an individual project for nation wide heat map of the U.S. by county, and can be viewed downed to the city for more accurate representation and details on a city level. 
